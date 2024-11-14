@@ -29,22 +29,15 @@ export default function SignIn() {
   }
  
   async function handleLoginGoogle() {
-    const {data , error} = supabase.auth.signInWithOAuth({
+    const { data: session, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-    })
+    });
+  
     if (error) {
-      console.log(error)
-      
-    }else{
-      router.push('/userDashboard')
-      
+      console.log(error);
+    } else {
+      router.push('/userDashboard');
     }
-    
-   
-    
-
-
-    
   }
   const handleFacebookLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
