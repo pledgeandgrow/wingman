@@ -11,6 +11,8 @@ const config: Config = {
   	extend: {
   		colors: {
 			"wing-blue":'#002366',
+			"wing-orange":'#D4AC2C',
+			"wing-cyan":'#00AFF5',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

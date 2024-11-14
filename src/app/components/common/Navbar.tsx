@@ -1,8 +1,8 @@
 "use client"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Menu, Send, Plus, User, Earth, MenuIcon } from 'lucide-react'
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +12,49 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
+import { createClient } from '@supabase/supabase-js'
+import supabase from '@/utils/supabase'
+import { useRouter } from 'next/navigation'
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const getSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error || !data.session) {
+        setAuthenticated(false)
+      } else {
+        setAuthenticated(true)
+      }
+    };
+
+    getSession();
+  }, []);
+  async function handleLogOut() {
+    const { error } = await supabase.auth.signOut()
+    router.push('/signIn')
+    setAuthenticated(false)
+    
+
+    
+  }
 
   return (
     <nav className="bg-white shadow py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Image
+           <Link href={'/'}>
+           <Image
               src="/assets/images/wing-logo.png" 
               alt="Logo"
               width={100}
               height={100} 
               className="rounded-full" 
-            />
+            /></Link>
           </div>
 
           <div className="flex items-center justify-end flex-1">
@@ -49,7 +76,13 @@ export default function Navbar() {
             </div>
 
             <div className="ml-6 hidden sm:flex items-center">
-              <DropdownMenu>
+            <div  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+              {authenticated ? <Button onClick={handleLogOut}  className={buttonVariants()} >Log Out</Button> : <Link href={'/signIn'} className={buttonVariants()} >Sign in</Link>}
+
+
+               
+            </div>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative rounded-full bg-white p-1 text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-2 px-4 focus:ring-offset-2">
                     <MenuIcon/>
@@ -64,7 +97,7 @@ export default function Navbar() {
                   <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuItem>Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
             </div>
           </div>
 

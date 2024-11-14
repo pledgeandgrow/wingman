@@ -1,21 +1,33 @@
+"use client";
+
+import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
+import { useEffect } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Hero from "./components/hero/Hero";
+import HowItWorks from "./components/HowItWorks";
+import HomePageBenefits from "./components/HomePageBenefits";
+import HomeNewsLetter from "./components/HomeNewsLetter";
+
+
+
 
 export default function Home() {
+ 
+  
+
   return (
-    <>
-    <div
-     style={{background:"url(/assets/images/hero/hero.png"}}
-     className="relative h-[80vh]  overflow-hidden py-24 lg:py-32">
-        <div className="container">
-          <div className="max-w-2xl text-center mx-auto">
-            <h1 className="scroll-m-20 md:text-6xl text-wing-blue text-4xl font-extrabold tracking-tight ">
-              It's more than <br /> just a trip
-            </h1>
-          
-          </div>
-        
-        </div>
-      </div>
-    </>
+    <div className="bg-[#F5F5F5]">
+     <Hero/>
+     <HowItWorks/>
+     <HomeNewsLetter/>
+      
+    <HomePageBenefits/>
+
+      
+      
+    </div>
   );
 }
