@@ -9,19 +9,19 @@ function Page() {
   const router = useRouter();
   const [userEmail , setUserEmail] =useState(null)
 
-  useEffect(() => {
-    const getSession = async () => {
-      const { data, error } = await supabase.auth.getSession();
+  // useEffect(() => {
+  //   const getSession = async () => {
+  //     const { data, error } = await supabase.auth.getSession();
 
-      if (error || !data.session) {
-        router.push('/signIn'); 
-      } else {
-        setUserEmail(data.session.user.email );
-      }
-    };
+  //     if (error || !data.session) {
+  //       router.push('/signIn'); 
+  //     } else {
+  //       setUserEmail(data.session.user.email );
+  //     }
+  //   };
 
-    getSession();
-  }, [router]);
+  //   getSession();
+  // }, [router]);
 
   return (
     <div className='p-20'>
