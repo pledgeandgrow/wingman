@@ -156,6 +156,8 @@ function page() {
                       15 Kg
                     </Button>
                   </div>
+
+                  
                 </div>
               </div>
             ))}
