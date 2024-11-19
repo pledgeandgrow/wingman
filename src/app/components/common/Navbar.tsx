@@ -1,4 +1,5 @@
-"use client"
+'use client'
+
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Menu, Send, Plus, User, Earth, MenuIcon } from 'lucide-react'
@@ -12,14 +13,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image'
-import { createClient } from '@supabase/supabase-js'
 import supabase from '@/utils/supabase'
 import { useRouter } from 'next/navigation'
+import { SignInPopup } from '../SignInPopUp'
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     const getSession = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -33,13 +36,15 @@ export default function Navbar() {
 
     getSession();
   }, []);
+
   async function handleLogOut() {
     const { error } = await supabase.auth.signOut()
-    router.push('/signIn')
-    setAuthenticated(false)
-    
-
-    
+    if (!error) {
+      router.push('/')
+      setAuthenticated(false)
+    } else {
+      console.error('Error signing out:', error.message)
+    }
   }
 
   return (
@@ -54,7 +59,8 @@ export default function Navbar() {
               width={100}
               height={100} 
               className="rounded-full" 
-            /></Link>
+            />
+           </Link>
           </div>
 
           <div className="flex items-center justify-end flex-1">
@@ -76,28 +82,13 @@ export default function Navbar() {
             </div>
 
             <div className="ml-6 hidden sm:flex items-center">
-            <div  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
-              {authenticated ? <Button onClick={handleLogOut}  className={buttonVariants()} >Log Out</Button> : <Link href={'/signIn'} className={buttonVariants()} >Sign in</Link>}
-
-
-               
-            </div>
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative rounded-full bg-white p-1 text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-2 px-4 focus:ring-offset-2">
-                    <MenuIcon/>
-                    <span className="sr-only">Open user menu</span>
-                    <User/>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Sign out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
+              <div className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+                {authenticated ? (
+                  <Button onClick={handleLogOut} className={buttonVariants()}>Log Out</Button>
+                ) : (
+                  <Button onClick={() => setIsSignInOpen(true)} className={buttonVariants()}>Sign in</Button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -139,13 +130,21 @@ export default function Navbar() {
               <Link href="/settings" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
                 Settings
               </Link>
-              <Link href="/signout" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                Sign out
-              </Link>
+              {authenticated ? (
+                <Button onClick={handleLogOut} className="w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                  Sign out
+                </Button>
+              ) : (
+                <Button onClick={() => setIsSignInOpen(true)} className="w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                  Sign in
+                </Button>
+              )}
             </div>
           </div>
         </div>
       )}
+
+      <SignInPopup isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </nav>
   )
 }
