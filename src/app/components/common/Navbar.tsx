@@ -59,7 +59,7 @@ export default function Navbar() {
 
           <div className="flex items-center justify-end flex-1">
             <div className="hidden sm:flex sm:space-x-8">
-              <Link href="/send" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+              <Link href="/sendItem" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 <Send className="mr-2 h-4 w-4" />
                  Send item
               </Link>
@@ -67,7 +67,7 @@ export default function Navbar() {
                 <Plus className="mr-2 h-4 w-4" />
                 Post a Flight
               </Link>
-              <Link href="/flights" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+              <Link href="/bookWingman" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 New to wingman ?
               </Link>
               <Link href="/flights" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
