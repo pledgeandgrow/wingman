@@ -4,29 +4,29 @@ import React from 'react'
 function HomePageBenefits() {
 	const sections = [
 		{
-		  title: "Innovation at its core",
-		  description: "We bring cutting-edge solutions to transform your business landscape.",
-		  image: "/assets/images/wing-logo.png",
+		  title: "Ease of use",
+		  description: "Enjoy a seamless experience with our intuitive interface that's simple for everyone to navigate.",
+		  image: "/assets/images/support.png",
 		},
 		{
-		  title: "Customer-centric approach",
-		  description: "Your success is our priority. We tailor our services to meet your unique needs.",
-		  image: "/assets/images/wing-logo.png",
+		  title: "Tracking",
+		  description: "Stay informed in real-time with our advanced tracking system, keeping you updated every step of the way.",
+		  image: "/assets/images/tracking.png",
 		},
 		{
-		  title: "Sustainable practices",
-		  description: "We're committed to eco-friendly operations that benefit both you and the planet.",
-		  image: "/assets/images/wing-logo.png",
+		  title: "Secure Process",
+		  description: "Your privacy is our top priority. We utilize cutting-edge security measures to protect your data at all times.",
+		  image: "/assets/images/security.png",
 		},
 		{
-		  title: "Expert team",
-		  description: "Our professionals bring years of industry experience to every project.",
-		  image: "/assets/images/wing-logo.png",
+		  title: "Affordable prices",
+		  description: "Access premium features without the premium price tag. Wingman offers exceptional value for all users.",
+		  image: "/assets/images/price.png",
 		},
 		{
-		  title: "Global reach, local touch",
-		  description: "We operate worldwide while maintaining a personalized approach for each client.",
-		  image: "/assets/images/wing-logo.png",
+		  title: "24/7 Service",
+		  description: "We're here for you around the clock. Our support team is available anytime you need assistance.",
+		  image: "/assets/images/service.png",
 		},
 	  ]
   return (
