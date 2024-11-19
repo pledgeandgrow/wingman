@@ -63,7 +63,7 @@ export default function Navbar() {
                 <Send className="mr-2 h-4 w-4" />
                  Send item
               </Link>
-              <Link href="/flights" className="mr-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+              <Link href="/postFlight" className="mr-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 <Plus className="mr-2 h-4 w-4" />
                 Post a Flight
               </Link>

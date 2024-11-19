@@ -14,8 +14,9 @@ function Footer() {
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Informations</h2>
               <ul className="space-y-2">
                 <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Help Center</Link></li>
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Terms and Conditions</Link></li>
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms-conditions" className="text-gray-50 hover:text-gray-300 transition-colors">Terms and Conditions</Link></li>
+                <li><Link href="/privacyPolicy" className="text-gray-50 hover:text-gray-300 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/legalNotice" className="text-gray-50 hover:text-gray-300 transition-colors">Legal Notice</Link></li>
               </ul>
             </div>
             <div className="mb-8">
