@@ -3,7 +3,7 @@ import React from 'react';
 
 function HowItWorks() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 ">
       <div className="container mx-auto px-4">
         <div className="relative w-full max-w-4xl mx-auto mt-6 aspect-square">
           <div className="absolute inset-0 flex items-center justify-center">
@@ -16,9 +16,9 @@ function HowItWorks() {
               />
             </div>
           </div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg p-4 text-center">
-            <h2 className="text-3xl font-bold mb-2">How does it work</h2>
-            <p className="text-sm text-gray-600">
+          <div >
+            <h2 className="text-3xl font-bold mb-2 text-center">How does it work</h2>
+            <p className="text-sm md:text-xl text-gray-600 text-center">
               Send items or goods to your loved ones and family through a circular model and an efficient method.
             </p>
           </div>
