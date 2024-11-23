@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import React from 'react'
+import Link from 'next/link'
 
 function Hero() {
   return (
@@ -55,9 +56,9 @@ function Hero() {
             </SelectContent>
           </Select>
         </div>
-        <Button  className="w-full lg:w-auto lg:px-8 lg:self-stretch">
+        <Link href="/flights"  className="w-full lg:w-auto lg:px-8 lg:self-stretch">
           Search
-        </Button>
+        </Link>
       </div>
       </div>
      
