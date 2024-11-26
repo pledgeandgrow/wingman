@@ -75,7 +75,7 @@ export default function ESIMPage() {
         </div>
       </div>
 
-      <div className="py-16">
+      <div className="py-16 max-w-5xl mx-auto">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
             Why Book eSIM and SIM with Trip.com?
@@ -94,7 +94,7 @@ export default function ESIMPage() {
         </div>
       </div>
 
-      <div className="bg-gray-50 py-16">
+      <div className="bg-gray-50 py-16 max-w-5xl mx-auto">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
             Activate your eSIM Before Departure
