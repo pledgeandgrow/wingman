@@ -57,13 +57,13 @@ function page() {
         </Button>
       </div>
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
   
        
 
         {/* Flight Cards */}
         <div className="w-full">
-  <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
+  <div className="grid gap-6 grid-cols-1 md:grid-cols-1">
     {[
       {
         from: "New York",
