@@ -1,6 +1,7 @@
 import { Apple, PlayCircle } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { Globe, Instagram, Facebook, Twitter } from 'lucide-react';
 
 function Footer() {
   return (
@@ -67,7 +68,57 @@ function Footer() {
             </div>
           </div>
         </div>
+        
       </footer>
+      {/* bottom footer */}
+      <div className="w-full flex flex-col md:flex-row justify-between items-center text-sm text-white border-t border-gray-300 py-4 px-12">
+        {/* Left Section */}
+        <div className="space-x-2 md:space-x-4">
+          <span>© 2024 Wingman, Inc.</span>
+          <span>·</span>
+          <a href="#" className="hover:underline">
+            Confidentialité
+          </a>
+          <span>·</span>
+          <a href="#" className="hover:underline">
+            Conditions générales
+          </a>
+          <span>·</span>
+          <a href="#" className="hover:underline">
+            Plan du site
+          </a>
+          <span>·</span>
+          <a href="#" className="hover:underline">
+            Fonctionnement du site
+          </a>
+          <span>·</span>
+          <a href="#" className="hover:underline">
+            Infos sur l’entreprise
+          </a>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0 space-y-2 md:space-y-0 md:space-x-4">
+          <div className="flex items-center space-x-2">
+            <span className="flex items-center">
+                  <Globe  className="w-4 h-4"  /> <span className="ml-1">Français (FR)</span>
+            </span>
+            <span>·</span>
+            <span>€ EUR</span>
+          </div>
+          <div className="flex space-x-4">
+  <a href="#" className="hover:underline">
+    <Facebook className="w-4 h-4" />
+  </a>
+  <a href="#" className="hover:underline">
+    <Twitter className="w-4 h-4" />
+  </a>
+  <a href="#" className="hover:underline">
+    <Instagram className="w-4 h-4" />
+  </a>
+</div>
+        </div>
+      </div>
     </div>
   );
 }
