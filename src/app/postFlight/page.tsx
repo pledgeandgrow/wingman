@@ -112,7 +112,7 @@ function page() {
           </div>
           <div>
             <Label className="text-lg font-semibold mb-4 block">Date Availability</Label>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className=" flex justify-center items-center gap-4">
 				from
               <Input type="date" className="" />
 			  to
