@@ -30,6 +30,7 @@ function Footer() {
                 <li><Link href="/gift-card" className="text-gray-50 hover:text-gray-300 transition-colors">Gift Cards</Link></li>
                 <li><Link href="/e-sim" className="text-gray-50 hover:text-gray-300 transition-colors">E SIM</Link></li>
                 <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Investors</Link></li>
+                <li><Link href="/premium-packages" className="text-gray-50 hover:text-gray-300 transition-colors">Premium packages</Link></li>
                 <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Partners</Link></li>
               </ul>
             </div>
