@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import React from 'react'
+import Link from "next/link";
 
 function page() {
   return (
@@ -9,7 +10,9 @@ function page() {
 		<main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">Welcome Mehdi</h1>
+          <Link href="/registerItem">
           <Button>Register a package</Button>
+        </Link>
         </div>
 
         <div className="space-y-6">

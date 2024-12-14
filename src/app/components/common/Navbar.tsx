@@ -67,7 +67,7 @@ export default function Navbar() {
             <div className="hidden sm:flex sm:space-x-8">
               <Link href="/registerItem" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 <Send className="mr-2 h-4 w-4" />
-                 Register An Item
+                Register an item
               </Link>
               <Link href="/postFlight" className="mr-6 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 <Plus className="mr-2 h-4 w-4" />

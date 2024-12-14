@@ -24,7 +24,7 @@ function page() {
         <p className="text-gray-500">Voyageur</p>
         <span className="text-gray-600 font-medium text-center mt-4">
           6<br />
-          <span className="text-sm">Months on Airbnb</span>
+          <span className="text-sm">Months on Wingman</span>
         </span>
       </div>
 
