@@ -10,6 +10,7 @@ import { Plane } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { FlightFilter, FilterState } from './components/FlightFilter'
 
+
 const flightData = [
   {
     from: "New York",
@@ -266,7 +267,11 @@ export default function Page() {
                   </div>
                 </div>
                 <div className="px-6 py-4 flex items-center justify-between">
-                  <div className="flex items-center">
+                  
+
+                    
+                    <Link href="/userProfile">
+                    <div className="flex items-center">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={card.user.avatar} alt={card.user.name} />
                       <AvatarFallback>{card.user.name[0]}</AvatarFallback>
@@ -274,7 +279,9 @@ export default function Page() {
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-50">{card.user.name}</p>
                     </div>
-                  </div>
+                    </div>
+                   </Link>
+                  
                   <Link
                     href="/bookWingman"
                     className={`${buttonVariants({ variant: "outline" })} bg-white text-wing-blue font-bold`}

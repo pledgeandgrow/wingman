@@ -32,34 +32,38 @@ function page() {
  
   const accordionData = [
     {
-      title: "Credit / Debit Card",
+      title: "Apple Pay / Google Pay",
       description: "Visa, Mastercard, Amex, Rupay, and more",
       imageSrc: credit,
+      content: "You can easily make payments using Apple Pay or Google Pay. We support Visa, Mastercard, Amex, and more.",
     },
     {
       title: "Paylater",
-      description:
-        "LazyPay, Simpl, ZestMoney, ICICI PayLater, HDFC Flexipay, and more",
+      description: "LazyPay, Simpl, ZestMoney, ICICI PayLater, HDFC Flexipay, and more",
       imageSrc: paylater,
+      content: "Pay later with LazyPay, Simpl, ZestMoney, and leading PayLater options. Split your payments easily.",
     },
     {
       title: "Net Banking",
       description: "We support all major banks",
       imageSrc: Netbanking,
+      content: "Net banking is available for all major banks, ensuring secure and quick transactions.",
     },
     {
       title: "Add New Payment Option",
       description: "",
       imageSrc: Newpayment,
+      content: "Add a new payment option to your account for more flexibility in transactions.",
     },
   ];
+  
 
   return (
     <>
       <div className="w-full  mt-2 page-main">
         <div className="w-[90%] m-auto pt-10 pb-20 ps-20 text-white  bg-[#002366] rounded-[50px] pagetop ">
-          <h1 className="text-[40px] font-extrabold">Showing Results For</h1>
-          <p className="text-[30px]">Find Your Wingman</p>
+          <h1 className="text-[40px] font-extrabold">Ready for your expedition?</h1>
+          <p className="text-[30px]">Book this Wingman</p>
         </div>
 
         <div className="w-[80%] m-auto mt-[-40px] bg-[#fff] rounded-xl p-16 shadow-lg page-section-second">
@@ -149,60 +153,58 @@ function page() {
               <div className="mt-10">
                 <h1>All Payment Options</h1>
                 <div className="space-y-5">
-                  {accordionData.map((item, index) => (
-                    <div
-                      key={index}
-                      className="w-full p-4 mx-auto bg-white border rounded-xl shadow-md"
-                    >
-                      <div
-                        onClick={() => toggleAccordion(index)}
-                        className="flex items-center justify-between cursor-pointer"
-                      >
-                        <div className="flex items-center gap-2">
-                          <img
-                            src={item.imageSrc.src}
-                            width={40}
-                            height={15}
-                            alt={`${item.title} icon`}
-                          />
-                          <div>
-                            <h3 className="text-sm font-bold text-gray-800">
-                              {item.title}
-                            </h3>
-                            {item.description && (
-                              <p className="text-xs">{item.description}</p>
-                            )}
-                          </div>
-                        </div>
-                        <svg
-                          className={`w-5 h-5 text-gray-600 transform transition-transform duration-200 ${
-                            openIndex === index ? "rotate-180" : ""
-                          }`}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </div>
+  {accordionData.map((item, index) => (
+    <div
+      key={index}
+      className="w-full p-4 mx-auto bg-white border rounded-xl shadow-md"
+    >
+      <div
+        onClick={() => toggleAccordion(index)}
+        className="flex items-center justify-between cursor-pointer"
+      >
+        <div className="flex items-center gap-2">
+          <img
+            src={item.imageSrc.src}
+            width={40}
+            height={15}
+            alt={`${item.title} icon`}
+          />
+          <div>
+            <h3 className="text-sm font-bold text-gray-800">
+              {item.title}
+            </h3>
+            {item.description && (
+              <p className="text-xs">{item.description}</p>
+            )}
+          </div>
+        </div>
+        <svg
+          className={`w-5 h-5 text-gray-600 transform transition-transform duration-200 ${
+            openIndex === index ? "rotate-180" : ""
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
 
-                      {openIndex === index && (
-                        <div className="mt-4 text-gray-700">
-                          <p>
-                            This is the content of the accordion. It is only
-                            visible when the accordion is open.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+      {openIndex === index && (
+        <div className="mt-4 text-gray-700">
+          <p>{item.content}</p>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
               </div>
             </div>
 

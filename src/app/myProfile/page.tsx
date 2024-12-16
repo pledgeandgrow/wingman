@@ -97,6 +97,7 @@ function Page() {
           ) : (
             <div className="w-20 h-20 bg-gray-300 rounded-full mb-4 flex items-center justify-center">
               <span className="text-2xl text-gray-600">{user?.name?.charAt(0) || '?'}</span>
+
             </div>
           )}
           <h3 className="text-xl font-semibold">{user?.name || 'Utilisateur'}</h3>
@@ -119,7 +120,7 @@ function Page() {
             </li>
             <li className="flex items-center text-gray-700">
               <span className="text-green-500 font-bold mr-2">✔</span> Numéro de
-              téléphone : {user.phone_number}
+              téléphone : {user?.phone_number}
             </li>
           </ul>
         </div>

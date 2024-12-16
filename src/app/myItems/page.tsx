@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import React from 'react'
+import Link from "next/link";
 
 function page() {
   return (
@@ -10,7 +11,13 @@ function page() {
 		<main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">Welcome Mehdi</h1>
+<<<<<<< HEAD
           <Link className={buttonVariants()} href={'/registerItem'}>Register a package</Link>
+=======
+          <Link href="/registerItem">
+          <Button>Register a package</Button>
+        </Link>
+>>>>>>> 4b25f3f6994a8086ecdada2ff562343ab65f89ec
         </div>
 
         <div className="space-y-6">

@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { MapPin, BaggageClaim, User } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import Link from "next/link";
+
 
 
 const  registerItem = () => {
@@ -54,7 +56,10 @@ const  registerItem = () => {
 
 <div className=" rounded-lg max-w-4xl mx-auto p-6  md:p-8">
         <div className="flex justify-center mb-8">
+          <Link href="/myItems">
           <Button className="bg-[#00205B] text-white px-8 ">Register an Item</Button>
+
+        </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-8 mb-8">
@@ -79,19 +84,20 @@ const  registerItem = () => {
         <div className="mb-8">
           <Label className="text-lg font-semibold mb-4 block">Package Preferences</Label>
           <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-            {tags.map((tag) => (
-              <Button
-                key={tag}
-                variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className={`rounded-full text-sm ${
-                  tag === 'Clothes and Textile' ? 'bg-[#00205B] text-white' : ''
-                }`}
-                onClick={() => toggleTag(tag)}
-              >
-                {tag}
-              </Button>
-            ))}
-          </div>
+  {tags.map((tag) => (
+    <Button
+      key={tag}
+      variant={selectedTags.includes(tag) ? "default" : "outline"}
+      className={`rounded-full text-sm ${
+        selectedTags.includes(tag) ? "bg-[#00205B] text-white" : ""
+      }`}
+      onClick={() => toggleTag(tag)}
+    >
+      {tag}
+    </Button>
+  ))}
+</div>
+
         </div>
 
         <div className="mb-8">
@@ -130,12 +136,16 @@ const  registerItem = () => {
           </div>
           <div>
             <Label className="text-lg font-semibold mb-4 block">Date Availability</Label>
-            <div className="grid sm:grid-cols-2 gap-4">
-				from
-              <Input type="date" className="" />
-			  to
-              <Input type="date" />
+            <div className=" flex justify-between items-center gap-4">
+            <div>
+            From
+            <Input type="date" className="" />
             </div>
+            <div>
+            To
+            <Input type="date" />
+            </div>
+          </div>
           </div>
         </div>
 
