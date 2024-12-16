@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 function Page() {
   const { toast } = useToast();
   const [hasProfile, setHasProfile] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
