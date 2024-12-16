@@ -1,17 +1,34 @@
 "use client";
+
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { MapPin } from "lucide-react";
+import { MapPin, Plane } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabase from "@/utils/supabase";
+import { useToast } from "@/hooks/use-toast";
 
-function page() {
+function PostFlightPage() {
+  const [flightNumber, setFlightNumber] = useState("");
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [availableWeight, setAvailableWeight] = useState([34]);
+  const [description, setDescription] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [kilograms, setKilograms] = useState([34]);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const router = useRouter();
+  const { toast } = useToast();
 
   const tags = [
     "Clothes and Textile",
@@ -34,29 +51,105 @@ function page() {
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!isConfirmed) {
+      toast({
+        title: "Error",
+        description: "Please confirm that you will deliver the package.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to post a flight.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const { data, error } = await supabase.from("flights").insert([
+        {
+          wingman_id: user.id,
+          flight_number: flightNumber,
+          departure_airport: departureAirport,
+          arrival_airport: arrivalAirport,
+          departure_time: `${departureDate}T${departureTime}`,
+          arrival_time: `${arrivalDate}T${arrivalTime}`,
+          available_weight: availableWeight[0],
+          description,
+        },
+      ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your flight has been posted successfully!",
+      });
+      router.push("/myFlights");
+    } catch (error) {
+      return
+    }
+  };
+
   return (
-    <div className=" rounded-lg max-w-4xl mx-auto p-6  md:p-8">
+    <form onSubmit={handleSubmit} className="rounded-lg max-w-4xl mx-auto p-6 md:p-8">
       <div className="flex justify-center mb-8">
-        <Link href="/myFlights">
-          <Button className="bg-[#00205B] text-white px-8">
-            Post a flight
-          </Button>
-        </Link>
+        <h1 className="text-2xl font-bold text-[#00205B]">Post a Flight</h1>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-8 mb-8">
         <div>
-          <Label className="text-lg font-semibold mb-4 block">Departure</Label>
+          <Label htmlFor="flightNumber" className="text-lg font-semibold mb-4 block">Flight Number</Label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-            <Input className="pl-10" placeholder="Departure airport" />
+            <Plane className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Input
+              id="flightNumber"
+              className="pl-10"
+              placeholder="Enter flight number"
+              value={flightNumber}
+              onChange={(e) => setFlightNumber(e.target.value)}
+              required
+            />
           </div>
         </div>
         <div>
-          <Label className="text-lg font-semibold mb-4 block">Arrival</Label>
+          <Label htmlFor="departureAirport" className="text-lg font-semibold mb-4 block">Departure</Label>
           <div className="relative">
             <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-            <Input className="pl-10" placeholder="Arrival airport" />
+            <Input
+              id="departureAirport"
+              className="pl-10"
+              placeholder="Departure airport"
+              value={departureAirport}
+              onChange={(e) => setDepartureAirport(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <Label htmlFor="arrivalAirport" className="text-lg font-semibold mb-4 block">Arrival</Label>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Input
+              id="arrivalAirport"
+              className="pl-10"
+              placeholder="Arrival airport"
+              value={arrivalAirport}
+              onChange={(e) => setArrivalAirport(e.target.value)}
+              required
+            />
           </div>
         </div>
       </div>
@@ -66,107 +159,125 @@ function page() {
           Package Preferences
         </Label>
         <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-  {tags.map((tag) => (
-    <Button
-      key={tag}
-      variant={selectedTags.includes(tag) ? "default" : "outline"}
-      className={`rounded-full text-sm ${
-        selectedTags.includes(tag) ? "bg-[#00205B] text-white" : ""
-      }`}
-      onClick={() => toggleTag(tag)}
-    >
-      {tag}
-    </Button>
-  ))}
-</div>
-
+          {tags.map((tag) => (
+            <Button
+              key={tag}
+              type="button"
+              variant={selectedTags.includes(tag) ? "default" : "outline"}
+              className={`rounded-full text-sm ${
+                selectedTags.includes(tag) ? "bg-[#00205B] text-white" : ""
+              }`}
+              onClick={() => toggleTag(tag)}
+            >
+              {tag}
+            </Button>
+          ))}
+        </div>
       </div>
 
       <div className="mb-8">
-        <Label className="text-lg font-semibold mb-4 block">
-          Available Kilograms
+        <Label htmlFor="availableWeight" className="text-lg font-semibold mb-4 block">
+          Available Weight (KG)
         </Label>
         <div className="px-2">
           <Slider
-            value={kilograms}
-            onValueChange={setKilograms}
+            id="availableWeight"
+            value={availableWeight}
+            onValueChange={setAvailableWeight}
             max={100}
             step={1}
             className="w-full"
           />
-          <div className="text-right mt-2">{kilograms[0]} KG</div>
+          <div className="text-right mt-2">{availableWeight[0]} KG</div>
         </div>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-8 mb-8">
         <div>
           <Label className="text-lg font-semibold mb-4 block">
-            Time availability
+            Departure Date and Time
           </Label>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label>Departure time</Label>
-              <div className="grid grid-cols-2 gap-2">
-                <Input type="number" placeholder="08" />
-                <Input type="number" placeholder="30" />
-              </div>
+              <Label htmlFor="departureDate">Date</Label>
+              <Input
+                id="departureDate"
+                type="date"
+                value={departureDate}
+                onChange={(e) => setDepartureDate(e.target.value)}
+                required
+              />
             </div>
             <div>
-              <Label>Arrival time</Label>
-              <div className="grid grid-cols-2 gap-2">
-                <Input type="number" placeholder="13" />
-                <Input type="number" placeholder="30" />
-              </div>
+              <Label htmlFor="departureTime">Time</Label>
+              <Input
+                id="departureTime"
+                type="time"
+                value={departureTime}
+                onChange={(e) => setDepartureTime(e.target.value)}
+                required
+              />
             </div>
           </div>
         </div>
         <div>
           <Label className="text-lg font-semibold mb-4 block">
-            Date Availability
+            Arrival Date and Time
           </Label>
-          <div className=" flex justify-between items-center gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-            from
-            <Input type="date" className="" />
+              <Label htmlFor="arrivalDate">Date</Label>
+              <Input
+                id="arrivalDate"
+                type="date"
+                value={arrivalDate}
+                onChange={(e) => setArrivalDate(e.target.value)}
+                required
+              />
             </div>
             <div>
-            to
-            <Input type="date" />
+              <Label htmlFor="arrivalTime">Time</Label>
+              <Input
+                id="arrivalTime"
+                type="time"
+                value={arrivalTime}
+                onChange={(e) => setArrivalTime(e.target.value)}
+                required
+              />
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-8 mb-8">
-        <div>
-          <Label className="text-lg font-semibold mb-4 block">
-            Height Limit
-          </Label>
-          <Input type="number" placeholder="Enter height limit" />
-        </div>
-        <div>
-          <Label className="text-lg font-semibold mb-4 block">
-            Width Limit
-          </Label>
-          <Input type="number" placeholder="Enter width limit" />
         </div>
       </div>
 
       <div className="mb-8">
-        <Label className="text-lg font-semibold mb-4 block">Description</Label>
-        <Textarea className="min-h-[100px]" placeholder="Enter description" />
+        <Label htmlFor="description" className="text-lg font-semibold mb-4 block">Description</Label>
+        <Textarea
+          id="description"
+          className="min-h-[100px]"
+          placeholder="Enter any additional information about your flight or package preferences"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </div>
 
       <div className="mb-8 flex items-start gap-2">
-        <Checkbox id="confirmation" className="mt-1" />
+        <Checkbox
+          id="confirmation"
+          className="mt-1"
+          checked={isConfirmed}
+          onCheckedChange={(checked) => setIsConfirmed(checked as boolean)}
+        />
         <label htmlFor="confirmation" className="text-sm text-gray-600">
-          I confirm that I will deliver the package.
+          I confirm that I will deliver the package and that all information provided is accurate.
         </label>
       </div>
 
-      <Button className="w-full bg-[#00205B] text-white">Next Page</Button>
-    </div>
+      <Button type="submit" className="w-full bg-[#00205B] text-white">
+        Post Flight
+      </Button>
+    </form>
   );
 }
 
-export default page;
+export default PostFlightPage;
+
