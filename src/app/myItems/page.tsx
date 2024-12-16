@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Link from 'next/link'
 import React from 'react'
 
 function page() {
@@ -9,7 +10,7 @@ function page() {
 		<main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">Welcome Mehdi</h1>
-          <Button>Register a package</Button>
+          <Link className={buttonVariants()} href={'/registerItem'}>Register a package</Link>
         </div>
 
         <div className="space-y-6">

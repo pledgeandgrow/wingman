@@ -44,7 +44,7 @@ const packages = [
 export default function PremiumPackages() {
   return (
     <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-24">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-10">
         <h2 className="mb-12 text-center text-4xl font-light text-gray-900 md:text-5xl">
           Premium Partnership Packages
         </h2>
