@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Menu, Send, Plus, User, Earth, MenuIcon, LogOut } from 'lucide-react'
+import { Menu, Send, Plus, User2, Earth, MenuIcon, LogOut } from 'lucide-react'
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -16,12 +16,13 @@ import Image from 'next/image'
 import supabase from '@/utils/supabase'
 import { useRouter } from 'next/navigation'
 import { SignInPopup } from '../SignInPopUp'
+import { User } from '@supabase/supabase-js'; // Adjust the import path based on your setup
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null); // Allow `User` or `null`
   const router = useRouter();
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function Navbar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <User className="h-6 w-6" />
+          <User2 className="h-6 w-6" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
