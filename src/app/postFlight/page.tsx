@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Plane } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import supabase from "@/utils/supabase";
 import { useToast } from "@/hooks/use-toast";
 
