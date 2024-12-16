@@ -21,7 +21,7 @@ interface Flight {
 
 export default function MyFlights() {
   const [user, setUser] = useState<any>(null)
-  const [flights, setFlights] = useState([])
+  const [flights, setFlights] = useState<any>([])
   const [activeTab, setActiveTab] = useState<string>('to-come')
 
   useEffect(() => {
