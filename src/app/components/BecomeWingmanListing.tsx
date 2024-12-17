@@ -6,7 +6,7 @@ import VideoPlayer from '../components/VideoPlayer';
 export default function ListingSection() {
   return (
     <section className="text-center py-10 px-4 bg-gray-50">
-      <h2 className="text-xl md:text-3xl font-semibold mb-4">Listing your home on Airbnb is easy</h2>
+      <h2 className="text-xl md:text-3xl font-semibold mb-4">Posting your flight on Wingman is easy</h2>
       <div className="my-6">
       <VideoPlayer />
       </div>
