@@ -14,7 +14,7 @@ export default function HeaderSection() {
         <div className="flex items-center gap-4 mt-4">
           <label htmlFor="slider" className="text-black">Kilogram:</label>
           <input type="range" id="slider" min="1" max="10" defaultValue="5" className="w-64 bg-wing-blue" onInput={updateSliderValue} />
-          <span id="slider-value" className="font-bold text-wing-blue">5.0 </span>
+          <span id="slider-value" className="font-bold text-wing-blue">5.0 KG</span>
         </div>
       </div>
     </section>
@@ -23,7 +23,7 @@ export default function HeaderSection() {
   function updateSliderValue(event: React.ChangeEvent<HTMLInputElement>) {
     const sliderValue = document.getElementById('slider-value');
     if (sliderValue) {
-      sliderValue.textContent = `${event.target.value}.0 $`;
+      sliderValue.textContent = `${event.target.value}.0 KG`;
     }
   }
 }

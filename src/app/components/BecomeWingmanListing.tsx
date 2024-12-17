@@ -11,7 +11,7 @@ export default function ListingSection() {
       <VideoPlayer />
       </div>
       <p className="text-gray-600 mb-4">
-        Create an ad for your accommodation in a few steps and manage everything on your mobile device.
+        Post a flight in a few steps and manage everything on your mobile device.
       </p>
       <button className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition">Post an ad</button>
     </section>

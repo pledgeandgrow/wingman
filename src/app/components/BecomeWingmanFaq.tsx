@@ -13,22 +13,22 @@ export default function FAQSection() {
   // Questions and answers data
   const faqs = [
     {
-      question: "Frequently Asked Questions",
-      answer: "These are some of the most common queries we receive and their answers."
+      question: "How does Wingman work?",
+      answer: "Wingmen post their flight details, and senders request item deliveries. Once accepted, Wingmen carry the items to the recipient safely."
     },
     {
-      question: "The basics of welcoming travelers",
-      answer: "Make travelers feel at home by providing clear instructions and a warm welcome."
+      question: "Is it safe to send items with a Wingman?",
+      answer: "Yes, all Wingmen are verified, and items must comply with airline and legal regulations."
     },
     {
-      question: "How do I list my property?",
-      answer: "You can list your property by navigating to the 'List Your Property' section on our website."
+      question: "What if a Wingman cancels or fails to deliver?",
+      answer: "We’ll notify you and help find a replacement. If delivery fails, we’ll investigate and resolve the issue as per our policy."
     }
   ];
 
   return (
     <section className="py-10 px-4 bg-gray-50 w-[80%] m-auto">
-      <h2 className="text-xl md:text-3xl font-semibold mb-4 text-center">Answers to your questions</h2>
+      <h2 className="text-xl md:text-3xl font-semibold mb-4 text-center">Frequently Asked Questions</h2>
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div
