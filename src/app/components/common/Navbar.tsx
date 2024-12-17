@@ -110,7 +110,7 @@ export default function Navbar() {
                 <Plus className="mr-2 h-4 w-4" />
                 Post a Flight
               </Link>
-              <Link href="/bookWingman" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
+              <Link href="/becomeWingman" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
                 New to wingman ?
               </Link>
               <Link href="/flights" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
