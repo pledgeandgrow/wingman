@@ -67,14 +67,9 @@ export default function Navbar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/myFlights">My Flights</Link>
+          <Link href="/userDashboardGroup">Dashboard</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/myItems">My Items</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/myProfile">Profile</Link>
-        </DropdownMenuItem>
+       
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogOut}>
           <LogOut className="mr-2 h-4 w-4" />

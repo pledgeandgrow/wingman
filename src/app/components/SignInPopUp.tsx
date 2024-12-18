@@ -38,7 +38,7 @@ export function SignInPopup({ isOpen, onOpenChange }: { isOpen: boolean; onOpenC
     if (error) {
       console.error('Error signing in:', error.message)
     } else {
-      router.push('/userDashboard')
+      router.push('/')
     }
 
     setIsLoading(false)
@@ -48,12 +48,15 @@ export function SignInPopup({ isOpen, onOpenChange }: { isOpen: boolean; onOpenC
   async function handleLoginGoogle() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options:{
+        redirectTo:'/userDashboardGroup'
+      }
     })
   
     if (error) {
       console.error('Error logging in with Google:', error.message)
     } else {
-      router.push('/userDashboard')
+      router.push('/userDashboardGroup')
     }
   }
 
@@ -65,7 +68,7 @@ export function SignInPopup({ isOpen, onOpenChange }: { isOpen: boolean; onOpenC
     if (error) {
       console.error('Error logging in with Facebook:', error.message)
     } else {
-      router.push('/userDashboard')
+      router.push('/')
     }
   }
 

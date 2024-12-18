@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import React from 'react'
@@ -56,7 +56,7 @@ function Hero() {
             </SelectContent>
           </Select>
         </div>
-        <Link href="/flights"  className="w-full lg:w-auto lg:px-8 lg:self-stretch">
+        <Link href="/flights"  className={` ${buttonVariants()} w-full lg:w-auto lg:px-8 lg:self-stretch`}>
           Search
         </Link>
       </div>

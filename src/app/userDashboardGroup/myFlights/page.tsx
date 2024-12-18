@@ -23,6 +23,7 @@ export default function MyFlights() {
   const [user, setUser] = useState<any>(null)
   const [flights, setFlights] = useState<any>([])
   const [activeTab, setActiveTab] = useState<string>('to-come')
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -67,7 +68,7 @@ export default function MyFlights() {
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center flex-col sm:flex-row flex-wrap gap-3 mb-8">
         <h1 className="text-2xl font-bold">Welcome {user?.name}</h1>
         <Link href={'/post-flight'} className={`bg-[#002466] hover:bg-[#002466]/90 text-white ${buttonVariants()}`}>Post a flight</Link>
       </div>
