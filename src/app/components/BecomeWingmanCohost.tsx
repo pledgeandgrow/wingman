@@ -5,11 +5,10 @@ export default function CoHostSection() {
   return (
     <section className="text-center py-10 px-4 bg-white">
       <h2 className="text-xl md:text-3xl font-semibold mb-4">
-        A co-host can manage hosting for you
+        A co-traveller can earn money with you
       </h2>
       <p className="text-gray-600 mb-8">
-        Hire a local co-host to offer quality services for managing your
-        accommodation and guests.
+        Travelling with friends? Earn money together by renting you available space and helping carry other items
       </p>
       <div className="flex flex-wrap justify-center gap-6">
         {[

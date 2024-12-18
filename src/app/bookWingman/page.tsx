@@ -32,16 +32,16 @@ function page() {
  
   const accordionData = [
     {
-      title: "Apple Pay / Google Pay",
-      description: "Visa, Mastercard, Amex, Rupay, and more",
+      title: "Credit/Debit Cards",
+      description: "Visa, Mastercard, American Express",
       imageSrc: credit,
-      content: "You can easily make payments using Apple Pay or Google Pay. We support Visa, Mastercard, Amex, and more.",
+      content: "We support Visa, Mastercard, Amex, and more.",
     },
     {
-      title: "Paylater",
-      description: "LazyPay, Simpl, ZestMoney, ICICI PayLater, HDFC Flexipay, and more",
+      title: "Mobile Wallets",
+      description: "Apple Pay, Google Pay, Samsung Pay>",
       imageSrc: paylater,
-      content: "Pay later with LazyPay, Simpl, ZestMoney, and leading PayLater options. Split your payments easily.",
+      content: "You can easily make payments using Apple Pay or Google Pay.",
     },
     {
       title: "Net Banking",
@@ -214,11 +214,11 @@ function page() {
                   <h1 className="py-2 text-lg font-bold">Bill Details</h1>
                   <div className=" flex items-center justify-between pb-2">
                     <p className="text-[12px] font-medium">Amount</p>
-                    <p className="text-[12px] font-medium">$400.00</p>
+                    <p className="text-[12px] font-medium">400.00€</p>
                   </div>
                   <div className=" flex items-center justify-between pb-2">
                     <p className="text-[12px] font-medium">Taxes & Fees</p>
-                    <p className="text-[12px] font-medium">$20.00</p>
+                    <p className="text-[12px] font-medium">20.00€</p>
                   </div>
                   <div className=" flex items-center justify-between pb-2">
                     <p className="py-2 text-lg font-bold">Total Charges</p>
