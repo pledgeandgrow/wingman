@@ -82,113 +82,98 @@ function Page() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-start min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mb-6 md:mb-0 md:mr-6">
-        {/* Profile Header */}
-        <div className="flex flex-col items-center border-b border-gray-200 p-6">
-          {avatarUrl ? (
-            <Image
-              src={avatarUrl}
-              alt="Profile Logo"
-              width={80}
-              height={80}
-              className="rounded-full mb-4"
-            />
-          ) : (
-            <div className="w-20 h-20 bg-gray-300 rounded-full mb-4 flex items-center justify-center">
-              <span className="text-2xl text-gray-600">{user?.name?.charAt(0) || '?'}</span>
-
-            </div>
-          )}
-          <h3 className="text-xl font-semibold">{user?.name || 'Utilisateur'}</h3>
-          <p className="text-gray-500">{role || 'Rôle non défini'}</p>
-          {/* <span className="text-gray-600 font-medium text-center mt-4">
-            6<br />
-            <span className="text-sm">Mois sur Airbnb</span>
-          </span> */}
-        </div>
-
-        {/* Verification Section */}
-        <div className="p-6">
-          <h4 className="text-lg font-semibold mb-2">
-            Vérifications effectuées par Wingman
-          </h4>
-          <ul className="space-y-2">
-            <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-2">✔</span> Adresse
-              e-mail : {email}
-            </li>
-            <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-2">✔</span> Numéro de
-              téléphone : {user?.phone_number}
-            </li>
-          </ul>
-        </div>
-
-        {/* Identity Verification Section */}
-        <div className="p-6 border-t border-gray-200">
-          <h4 className="text-lg font-semibold mb-2">
-            Procédez à la vérification de votre identité
-          </h4>
-          <p className="text-gray-500 text-sm mb-4">
-            Avant de réserver ou d'accueillir des voyageurs sur Airbnb, vous
-            devez effectuer cette procédure.
-          </p>
-          <Button className="w-full">
-            Vérifier mon identité
-          </Button>
-        </div>
+    <div className="flex flex-col md:flex-row justify-center items-start min-h-screen p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100">
+    <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6 md:mb-0 md:mr-6 transition-colors duration-200">
+      {/* Profile Header */}
+      <div className="flex flex-col items-center border-b border-gray-200 dark:border-gray-700 p-6">
+        {avatarUrl ? (
+          <Image
+            src={avatarUrl}
+            alt="Profile Logo"
+            width={80}
+            height={80}
+            className="rounded-full mb-4 ring-2 ring-blue-500 dark:ring-blue-400"
+          />
+        ) : (
+          <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center ring-2 ring-blue-500 dark:ring-blue-400">
+            <span className="text-2xl text-blue-600 dark:text-blue-300">{user?.name?.charAt(0) || '?'}</span>
+          </div>
+        )}
+        <h3 className="text-xl font-semibold">{user?.name || 'Utilisateur'}</h3>
+        <p className="text-gray-500 dark:text-gray-400">{role || 'Rôle non défini'}</p>
       </div>
-      {/* Right Section */}
-      <div className="w-full max-w-lg">
-        <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            {hasProfile ? 'Modifier votre profil' : 'Créer votre profil'}
-          </h2>
-          <div className="space-y-4">
-          <div>
-  <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-    Rôle
-  </label>
-  <Select value={role} onValueChange={setRole}>
-    <SelectTrigger>
-      <SelectValue placeholder="Sélectionnez votre rôle" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectItem value="sender">Sender</SelectItem>
-      <SelectItem value="wingman">Wingman</SelectItem>
-      <SelectItem value="receiver">Receiver</SelectItem>
-    </SelectContent>
-  </Select>
-</div>
 
-            <div>
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                Numéro de téléphone
-              </label>
-              <Input
-                id="phoneNumber"
-                type="tel"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="Votre numéro de téléphone"
-              />
-            </div>
+      {/* Verification Section */}
+      <div className="p-6">
+        <h4 className="text-lg font-semibold mb-2">
+          Vérifications effectuées par Wingman
+        </h4>
+        <ul className="space-y-2">
+          <li className="flex items-center text-gray-700 dark:text-gray-300">
+            <span className="text-green-500 dark:text-green-400 font-bold mr-2">✔</span> Adresse
+            e-mail : {email}
+          </li>
+          <li className="flex items-center text-gray-700 dark:text-gray-300">
+            <span className="text-green-500 dark:text-green-400 font-bold mr-2">✔</span> Numéro de
+            téléphone : {user?.phone_number}
+          </li>
+        </ul>
+      </div>
+
+      {/* Identity Verification Section */}
+      
+    </div>
+    {/* Right Section */}
+    <div className="w-full max-w-lg">
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-6 transition-colors duration-200">
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+          {hasProfile ? 'Modifier votre profil' : 'Créer votre profil'}
+        </h2>
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Rôle
+            </label>
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                <SelectValue placeholder="Sélectionnez votre rôle" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sender">Sender</SelectItem>
+                <SelectItem value="wingman">Wingman</SelectItem>
+                <SelectItem value="receiver">Receiver</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <Button
-            onClick={updateProfile}
-            disabled={isUpdating}
-            className="w-full mt-4"
-          >
-            {isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil'}
-          </Button>
-          <div className="text-gray-700 space-y-2 mt-6">
-            <p>Pas encore de trajet publié</p>
-            <p>Membre depuis {formattedDate}</p>
+
+          <div>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Numéro de téléphone
+            </label>
+            <Input
+              id="phoneNumber"
+              type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Votre numéro de téléphone"
+              className="w-full bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+            />
           </div>
+        </div>
+        <Button
+          onClick={updateProfile}
+          disabled={isUpdating}
+          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
+        >
+          {isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil'}
+        </Button>
+        <div className="text-gray-700 dark:text-gray-300 space-y-2 mt-6">
+          <p>Pas encore de trajet publié</p>
+          <p>Membre depuis {formattedDate}</p>
         </div>
       </div>
     </div>
+  </div>
   )
 }
 
