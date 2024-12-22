@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 function Page() {
   const { toast } = useToast();
@@ -130,7 +132,14 @@ function Page() {
           {hasProfile ? 'Modifier votre profil' : 'Créer votre profil'}
         </h2>
         <div className="space-y-4">
-          <div>
+            {!user?.role && <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Note : </AlertTitle>
+              <AlertDescription>
+                 You can't modify your role after !
+              </AlertDescription>
+           </Alert>   }      
+          {!user?.role && <div>
             <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Rôle
             </label>
@@ -144,7 +153,7 @@ function Page() {
                 <SelectItem value="receiver">Receiver</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> }
 
           <div>
             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">

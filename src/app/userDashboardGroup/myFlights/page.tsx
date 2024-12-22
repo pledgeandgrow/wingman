@@ -35,11 +35,13 @@ export default function MyFlights() {
   const [flights, setFlights] = useState<Flight[]>([])
   const [activeTab, setActiveTab] = useState<string>('to-come')
   const [mounted, setMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
  
   
   useEffect(() => {
     setMounted(true)
     const fetchUserData = async () => {
+      setIsLoading(true)
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
 
       if (sessionError || !sessionData.session) {
@@ -61,6 +63,7 @@ export default function MyFlights() {
         fetchFlights(userData?.id)
 
       }
+      setIsLoading(false)
     }
 
     fetchUserData()
@@ -85,6 +88,14 @@ export default function MyFlights() {
   }
  
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    )
+  }
+
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row flex-wrap gap-3 mb-8">
@@ -94,7 +105,7 @@ export default function MyFlights() {
 
       <div className="space-y-6">
         <h2 className="text-2xl text-center font-semibold">All Flights</h2>
-        <FlightList setFlights={setFlights} flights={flights}/>
+        <FlightList user={user} setFlights={setFlights} flights={flights}/>
       </div>
     </main>
   )
@@ -116,7 +127,7 @@ function formatTime(dateString: string): string {
   })
 }
 
-function FlightList({ flights , setFlights }: { flights: Flight[] , setFlights:any }) {
+function FlightList({ flights , setFlights , user }: { flights: Flight[] , setFlights:any , user:any }) {
   const [editingFlight, setEditingFlight] = useState<Flight | null>(null)
   const editFlight=async (flightId:string) => {
     const { data, error } = await supabase
@@ -129,36 +140,39 @@ function FlightList({ flights , setFlights }: { flights: Flight[] , setFlights:a
     
   }
   
-  const updateFlight =async (e: React.FormEvent<HTMLFormElement>) => {
+  const updateFlight = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault()
   if (!editingFlight) return 
 
   const formData = new FormData(e.currentTarget)
   const updatedFlight = {
-    wingman_id:'22b8356e-ad1c-4863-86ba-080e627bcc66',
+    wingman_id: user?.id,
     departure_airport: formData.get('departure') as string,
     arrival_airport: formData.get('arrival') as string,
     departure_time: formData.get('departure-time') as string,
     arrival_time: formData.get('arrival-time') as string,
     description: formData.get('description') as string,
     flight_number: formData.get('flight_number') as string,
-    available_weight: Number(formData.get('available_weight') as string), // Explicit conversion to number
+    available_weight: Number(formData.get('available_weight') as string), 
   }
-  const { data:flData, error } = await supabase
-  .from('flights')
-  .update(updatedFlight)
-  .eq('id', 'e68be65c-1ff3-4963-8005-f7e7b605ac68')
-  .select()
   
+  const { data: updatedFlightData, error } = await supabase
+    .from('flights')
+    .update(updatedFlight)
+    .eq('id', editingFlight.id)
+    .select()
+    .single()
 
-if (error) {
-  console.error('Error updating flight:', error)
-} else {
-  console.log(flData)
- 
-}
-
- 
+  if (error) {
+    console.error('Error updating flight:', error)
+  } else {
+    setFlights((prevFlights: Flight[]) => 
+      prevFlights.map(flight => 
+        flight.id === updatedFlightData.id ? { ...flight, ...updatedFlightData } : flight
+      )
+    )
+    setEditingFlight(null)
+  }
 }
 
 
