@@ -86,3 +86,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.aboutheader{
+  /* background: url(../app/assets/about-header.jpg); */
+}

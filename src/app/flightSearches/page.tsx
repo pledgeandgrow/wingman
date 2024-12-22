@@ -124,9 +124,10 @@ export default function Home() {
           {/* Tickets Section */}
           <main className="flex-1 grid gap-6 grid-cols-1 ">
             {cards.map((card, index) => (
-              <div
+              <Link
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-lg hover:border-2 hover:border-wing-orange "
+                href="/card"
               >
                 {/* Left Section */}
                 <div className="flex gap-6 text-left p-6 justify-between">
@@ -174,7 +175,7 @@ export default function Home() {
                     </div>
                    </Link>
                 </div>
-              </div>
+              </Link>
             ))}
           </main>
         </div>

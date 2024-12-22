@@ -54,13 +54,11 @@ const  registerItem = () => {
 
 </section> */}
 
-<div className=" rounded-lg max-w-4xl mx-auto p-6  md:p-8">
+<div className=" rounded-lg max-w-4xl mx-auto p-6  md:p-8"> 
         <div className="flex justify-center mb-8">
-          <Link href="/myItems">
-          <Button className="bg-[#00205B] text-white px-8 ">Register an Item</Button>
-
-        </Link>
-        </div>
+        <h1 className="text-2xl font-bold text-[#00205B]">Register an Item</h1>
+      </div>
+        
 
         <div className="grid sm:grid-cols-2 gap-8 mb-8">
           <div>
