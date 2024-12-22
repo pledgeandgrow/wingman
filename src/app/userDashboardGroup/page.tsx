@@ -84,28 +84,37 @@ const stats = [
 
 export default function DashboardPage() {
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-wing-blue">Welcome back, User!</h2>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => (
-          <Card key={index} className={`border-${index % 2 === 0 ? 'wing-orange' : 'wing-cyan'}`}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {stat.title}
-              </CardTitle>
-              {stat.icon}
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-wing-blue">{stat.value}</div>
-              <p className="text-xs text-muted-foreground">
-                {stat.change}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
+    <div className="flex-1 space-y-6 p-8 pt-6 transition-all">
+  <div className="flex items-center justify-between space-y-2">
+    <h2 className="text-3xl font-bold tracking-tight text-wing-blue dark:text-white">
+      Welcome back, User!
+    </h2>
+  </div>
+
+  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    {stats.map((stat, index) => (
+      <Card
+        key={index}
+        className={`border-2 ${index % 2 === 0 ? 'border-wing-orange' : 'border-wing-cyan'} bg-white dark:bg-gray-800 shadow-lg dark:shadow-none transition-all`}
+      >
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium text-wing-blue dark:text-white">
+            {stat.title}
+          </CardTitle>
+          <div className="text-wing-blue dark:text-white">
+            {stat.icon}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-wing-blue dark:text-white">{stat.value}</div>
+          <p className="text-xs text-muted-foreground dark:text-gray-400">
+            {stat.change}
+          </p>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</div>
+
   )
 }
