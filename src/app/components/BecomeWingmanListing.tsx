@@ -13,7 +13,7 @@ export default function ListingSection() {
       <p className="text-gray-600 mb-4">
         Post a flight in a few steps and manage everything on your mobile device.
       </p>
-      <button className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition">Post an ad</button>
+      <button className="bg-wing-blue text-white py-2 px-6 rounded-md">Post an ad</button>
     </section>
   );
 }

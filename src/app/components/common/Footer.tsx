@@ -23,7 +23,7 @@ function Footer() {
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Wingman</h2>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">About us</Link></li>
+                <li><Link href="/aboutus" className="text-gray-50 hover:text-gray-300 transition-colors">About us</Link></li>
                 <li><Link href="/becomeWingman" className="text-gray-50 hover:text-gray-300 transition-colors">Become a wingman</Link></li>
                 <li><Link href="/myFlights" className="text-gray-50 hover:text-gray-300 transition-colors">My Flights</Link></li>
                 <li><Link href="/myItems" className="text-gray-50 hover:text-gray-300 transition-colors">My Items</Link></li>
