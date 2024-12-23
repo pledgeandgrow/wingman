@@ -23,7 +23,7 @@ interface Delivery {
 interface EditDeliveryDialogProps {
   delivery: Delivery
   onClose: () => void
-  onEdit: (updatedDelivery: Delivery) => void
+  onEdit: (updatedDelivery: any) => void
 }
 
 export function EditDeliveryDialog({ delivery, onClose, onEdit }: EditDeliveryDialogProps) {

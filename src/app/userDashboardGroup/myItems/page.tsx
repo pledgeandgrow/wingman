@@ -62,12 +62,10 @@ export default function UserDashboard() {
         setIsLoading(true)
         setError(null)
 
-        // Fetch user data
         const { data: { user }, error: userError } = await supabase.auth.getUser()
         if (userError) throw new Error(userError.message)
         setUser(user as any)
 
-        // Fetch deliveries data
         const { data: deliveriesData, error: deliveriesError } = await supabase
           .from('deliveries')
           .select('*')
