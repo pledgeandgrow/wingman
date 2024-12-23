@@ -109,18 +109,12 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
 
 
   return (
-<<<<<<< HEAD:src/app/postFlight/page.tsx
     
     <form onSubmit={handleSubmit} className="rounded-lg max-w-4xl mx-auto p-6 md:p-8">
-=======
-    <form onSubmit={handleSubmit} className="rounded-lg max-w-4xl mx-auto p-6 md:p-8 ">
-      
->>>>>>> 8da4fa4295483b8539f06db538e1698075f8bc40:src/app/userDashboardGroup/postFlight/page.tsx
       <div className="flex justify-center mb-8">
         <h1 className="text-2xl font-bold text-[#00205B] dark:text-[#4A90E2] transition-colors duration-200">Post a Flight</h1>
       </div>
 
-<<<<<<< HEAD:src/app/postFlight/page.tsx
       <div className="space-y-8 mb-8">
   {/* Flight Number */}
   <div className="flex flex-col">
@@ -153,51 +147,6 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
           onChange={(e) => setArrivalAirport(e.target.value)}
           required
         />
-=======
-      <div className="grid sm:grid-cols-2 gap-8 mb-8">
-        <div>
-          <Label htmlFor="flightNumber" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Flight Number</Label>
-          <div className="relative">
-            <Plane className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-            <Input
-              id="flightNumber"
-              className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
-              placeholder="Enter flight number"
-              value={flightNumber}
-              onChange={(e) => setFlightNumber(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="departureAirport" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Departure</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-            <Input
-              id="departureAirport"
-              className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
-              placeholder="Departure airport"
-              value={departureAirport}
-              onChange={(e) => setDepartureAirport(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="arrivalAirport" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Arrival</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-            <Input
-              id="arrivalAirport"
-              className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
-              placeholder="Arrival airport"
-              value={arrivalAirport}
-              onChange={(e) => setArrivalAirport(e.target.value)}
-              required
-            />
-          </div>
-        </div>
->>>>>>> 8da4fa4295483b8539f06db538e1698075f8bc40:src/app/userDashboardGroup/postFlight/page.tsx
       </div>
     </div>
 
@@ -227,7 +176,6 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
         <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
           {tags.map((tag) => (
             <Button
-<<<<<<< HEAD:src/app/postFlight/page.tsx
             key={tag}
             type="button"
             variant={selectedTags.includes(tag) ? "default" : "outline"}
@@ -236,18 +184,6 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
             }`}
             onClick={() => toggleTag(tag)}
           >
-=======
-              key={tag}
-              type="button"
-              variant={selectedTags.includes(tag) ? "default" : "outline"}
-              className={`rounded-full text-sm transition-colors duration-200 ${
-                selectedTags.includes(tag)
-                  ? "bg-[#00205B] text-white dark:bg-[#4A90E2]"
-                  : "dark:bg-gray-700 dark:text-white dark:border-gray-600"
-              }`}
-              onClick={() => toggleTag(tag)}
-            >
->>>>>>> 8da4fa4295483b8539f06db538e1698075f8bc40:src/app/userDashboardGroup/postFlight/page.tsx
               {tag}
             </Button>
           ))}
@@ -272,7 +208,6 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
       </div>
 {/* ---------------------------------------------------------------------------------------------------------------------- */}
       <div className="grid sm:grid-cols-2 gap-8 mb-8">
-<<<<<<< HEAD:src/app/postFlight/page.tsx
       
 
 <div>
@@ -301,34 +236,6 @@ const [availableWidth, setAvailableWidth] = useState(100); // Default width
           onChange={(e) => setAvailableWidth(Number(e.target.value))}
           required
         />
-=======
-        <div>
-          <Label className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">
-            Departure Date and Time
-          </Label>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="departureDate" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Date</Label>
-              <Input
-                id="departureDate"
-                type="date"
-                value={departureDate}
-                onChange={(e) => setDepartureDate(e.target.value)}
-                required
-                className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
-              />
-            </div>
-            <div>
-              <Label htmlFor="departureTime" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Time</Label>
-              <Input
-                id="departureTime"
-                type="time"
-                value={departureTime}
-                onChange={(e) => setDepartureTime(e.target.value)}
-                required
-                className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
-              />
->>>>>>> 8da4fa4295483b8539f06db538e1698075f8bc40:src/app/userDashboardGroup/postFlight/page.tsx
             </div>
           </div>
         </div>
