@@ -65,9 +65,14 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Available flights",
+          url: "/flights",
+        },
+        {
           title: "My flights",
           url: "/userDashboardGroup/myFlights",
         },
+        
         
       ],
     },

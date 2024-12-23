@@ -67,7 +67,7 @@ export default function MyFlights() {
     }
 
     fetchUserData()
-  }, [mounted])
+  }, [])
 
   const fetchFlights = async (userId:string) => {
     const { data, error } = await supabase
@@ -100,7 +100,7 @@ export default function MyFlights() {
     <main className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row flex-wrap gap-3 mb-8">
         <h1 className="text-2xl font-bold">Welcome {user?.name}</h1>
-        <Link href={'/post-flight'} className={buttonVariants()}>Post a flight</Link>
+        <Link href={'/userDashboardGroup/postFlight'} className={buttonVariants()}>Post a flight</Link>
       </div>
 
       <div className="space-y-6">
