@@ -81,7 +81,7 @@ export function SignInPopup({ isOpen, onOpenChange }: { isOpen: boolean; onOpenC
             Please sign in to your account
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={onSubmit} className="space-y-4">
+        {/* <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -133,14 +133,14 @@ export function SignInPopup({ isOpen, onOpenChange }: { isOpen: boolean; onOpenC
               'Sign in'
             )}
           </Button>
-        </form>
+        </form> */}
         <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
             <Separator className="w-full" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
+               Continue with
             </span>
           </div>
         </div>
