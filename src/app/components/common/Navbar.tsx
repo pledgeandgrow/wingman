@@ -15,8 +15,9 @@ import {
 import Image from 'next/image'
 import supabase from '@/utils/supabase'
 import { useRouter } from 'next/navigation'
-import { SignInPopup } from '../SignInPopUp'
 import { User } from '@supabase/supabase-js'; // Adjust the import path based on your setup
+import {  SignInPopup } from '@/app/components/SignInPopUp'
+
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

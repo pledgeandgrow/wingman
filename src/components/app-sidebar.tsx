@@ -9,6 +9,7 @@ import {
   Frame,
   GalleryVerticalEnd,
   Map,
+  MessageCircle,
   MoreHorizontal,
   PieChart,
   Plane,
@@ -100,14 +101,21 @@ const data = {
         
       ],
     },
+    
    
   ],
   projects: [
+    {
+      name: "Contacter des wingmans",
+      url: "/userDashboardGroup/messages",
+      icon: MessageCircle,
+    },
     {
       name: "my Transactions",
       url: "#",
       icon: DollarSignIcon,
     },
+    
    
     
   ],
