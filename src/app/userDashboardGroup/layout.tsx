@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { AppSidebar } from "@/components/app-sidebar"
 import { FullScreenLoader } from "@/components/full-screen-loader"
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/toaster"
 import { useEffect, useState } from "react"
+import { NotificationDropdown } from "./components/notification-dropdown"
 
 export default function Layout({
   children,
@@ -65,7 +66,10 @@ export default function Layout({
                     </BreadcrumbList>
                   </Breadcrumb>
                 </div>
-                <ModeToggle />
+                <div className="flex items-center gap-2">
+                  <NotificationDropdown />
+                  <ModeToggle />
+                </div>
               </header>
               <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                 {children}
