@@ -205,7 +205,7 @@ export default function Page() {
                 "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
             }}
           >
-            <p className="text-lg font-bold text-gray-500">1 passenger</p>
+            <p className="text-lg font-bold text-gray-500">1 Kilogram</p>
             <p className="text-xl font-semibold">77.79 &euro;</p>
           </div>
 

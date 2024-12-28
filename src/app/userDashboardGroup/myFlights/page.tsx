@@ -203,7 +203,7 @@ function FlightList({ flights , setFlights , user }: { flights: Flight[] , setFl
               </div>
             </div>
             <div>
-              <p className="text-3xl text-gray-900 dark:text-gray-100">10 €</p>
+              <p className="text-3xl text-gray-900 dark:text-gray-100">10 Kilogram</p>
             </div>
           </div>
 
