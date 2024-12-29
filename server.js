@@ -19,11 +19,7 @@ async function startServer() {
         methods: ["GET", "POST"],
         credentials: true
       },
-      transports: ['websocket'],
-      pingTimeout: 60000,
-      pingInterval: 25000,
-      connectTimeout: 45000,
-      allowEIO3: true
+    
     });
 
     io.on("connection", (socket) => {
