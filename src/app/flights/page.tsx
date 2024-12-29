@@ -7,7 +7,7 @@ import { SearchParams } from '../types/flights'
 export default async function FlightsPage({
   searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams
 }) {
   const flights = await getFlights(searchParams)
 
