@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Flight } from '@/types/flights'
 import { Plane } from 'lucide-react'
+import { Flight } from '@/app/types/flights'
 
 function getInitials(name: string) {
   return name
