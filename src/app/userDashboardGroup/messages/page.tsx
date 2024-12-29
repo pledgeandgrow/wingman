@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSupabaseUser } from '@/app/hooks/getSession'
+import supabase from '@/utils/supabase'
 import { io, Socket } from 'socket.io-client'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,9 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import supabase from '@/utils/supabase'
-import { useToast } from "@/hooks/use-toast";
-
 
 interface User {
   id: string;
@@ -37,15 +35,10 @@ export default function ChatComponent() {
   const [socket, setSocket] = useState<Socket | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [isSending, setIsSending] = useState(false)
-  const [error, setError] = useState<string | null>(null);
-  const [filteredMessages, setFilteredMessages] = useState<Message[]>([]);
-  const notificationSound = useRef(new Audio('/sounds/notification.wav'));
-  const {toast} = useToast();
-
 
   const setupSocket = useCallback(() => {
-    if (!socket && currentUser) {
-      const newSocket = io('http://localhost:3000');
+    if (!socket) {
+      const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || '');
       setSocket(newSocket);
 
       newSocket.on('connect', () => {
@@ -55,21 +48,17 @@ export default function ChatComponent() {
       newSocket.on('disconnect', () => {
         console.log('Disconnected from socket server');
       });
-      const sound = notificationSound.current;
 
       newSocket.on('chat message', (msg: Message) => {
+        console.log('Received message:', msg);
         setMessages(prevMessages => {
           if (!prevMessages.some(m => m.id === msg.id)) {
-            // Play sound only if the message is from another user
-            if (msg.receiver_id === currentUser.id && msg.sender_id !== currentUser.id) {
-              notificationSound.current.play().catch(error => console.error('Error playing sound:', error));
-              toast({
-                title: "New Message",
-                description: `New message `,
-                variant: "default",
-              })
+            if (
+              (msg.sender_id === currentUser?.id && msg.receiver_id === selectedUser?.id) ||
+              (msg.sender_id === selectedUser?.id && msg.receiver_id === currentUser?.id)
+            ) {
+              return [...prevMessages, msg];
             }
-            return [...prevMessages, msg];
           }
           return prevMessages;
         });
@@ -79,7 +68,7 @@ export default function ChatComponent() {
         newSocket.disconnect();
       };
     }
-  }, [currentUser]);
+  }, [currentUser?.id, selectedUser?.id]);
 
   useEffect(() => {
     setupSocket();
@@ -87,7 +76,6 @@ export default function ChatComponent() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      if (!currentUser) return;
       const { data, error } = await supabase
         .from('users')
         .select()
@@ -135,44 +123,35 @@ export default function ChatComponent() {
     }
   }, [selectedUser, fetchChatHistory]);
 
-  useEffect(() => {
-    if (selectedUser && currentUser) {
-      setFilteredMessages(messages.filter(msg => 
-        (msg.sender_id === currentUser.id && msg.receiver_id === selectedUser.id) ||
-        (msg.sender_id === selectedUser.id && msg.receiver_id === currentUser.id)
-      ));
-    } else {
-      setFilteredMessages([]);
-    }
-  }, [selectedUser, currentUser, messages]);
-
   const handleSendMessage = async () => {
     if (newMessage.trim() && selectedUser && currentUser && socket && !isSending) {
       setIsSending(true);
-      const message = {
+      const message: Message = {
+        id: Date.now().toString(),
         sender_id: currentUser.id,
         receiver_id: selectedUser.id,
         message: newMessage.trim(),
         created_at: new Date().toISOString(),
         is_read: false,
       };
-  
+
       try {
-  
-        const { data: messageData, error: messageError } = await supabase
+        // Save the message to Supabase first
+        const { data, error } = await supabase
           .from('notifications')
           .insert([message])
           .select()
           .single();
-  
-        if (messageError) throw messageError;
-  
-        socket.emit('chat message', messageData);
-  
+
+        if (error) throw error;
+
+        // If successful, update local state and emit via socket
+        setMessages(prevMessages => [...prevMessages, data]);
+        socket.emit('chat message', data);
         setNewMessage('');
       } catch (error) {
-        console.error("Error saving message:", error);
-        setError("Failed to send message. Please try again.");
+        console.error("Error saving message to Supabase", error);
+        // Optionally, show an error message to the user
       } finally {
         setIsSending(false);
       }
@@ -247,7 +226,7 @@ export default function ChatComponent() {
         <CardContent className="flex-grow overflow-hidden p-0">
           <ScrollArea className="h-[calc(600px-8rem)]" ref={scrollRef}>
             <div className="p-4">
-              {filteredMessages.map((message) => (
+              {messages.map((message) => (
                 <div key={message.id} className={`flex mb-4 ${message.sender_id === currentUser.id ? 'justify-end' : 'justify-start'}`}>
                   <div className={`flex items-start max-w-[70%] ${message.sender_id === currentUser.id ? 'flex-row-reverse' : 'flex-row'}`}>
                     <Avatar className="w-8 h-8 mx-2">
@@ -267,16 +246,12 @@ export default function ChatComponent() {
           </ScrollArea>
         </CardContent>
         <div className="p-4">
-          {error && <p className="text-red-500 mb-2">{error}</p>}
           <div className="flex space-x-2">
             <Input
               type="text"
               placeholder="Type a message..."
               value={newMessage}
-              onChange={(e) => {
-                setNewMessage(e.target.value);
-                setError(null);
-              }}
+              onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !isSending && handleSendMessage()}
               className="flex-grow"
               disabled={!selectedUser || isSending}
