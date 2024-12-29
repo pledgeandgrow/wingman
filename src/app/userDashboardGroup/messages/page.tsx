@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSupabaseUser } from '@/app/hooks/getSession'
-import supabase from '@/utils/supabase'
 import { io, Socket } from 'socket.io-client'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -10,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
+import supabase from '@/utils/supabase'
 
 interface User {
   id: string;
@@ -127,7 +127,6 @@ export default function ChatComponent() {
     if (newMessage.trim() && selectedUser && currentUser && socket && !isSending) {
       setIsSending(true);
       const message: Message = {
-        id: Date.now().toString(),
         sender_id: currentUser.id,
         receiver_id: selectedUser.id,
         message: newMessage.trim(),
