@@ -20,7 +20,10 @@ async function startServer() {
         credentials: true
       },
       path: '/socket.io',
-      transports: ['websocket', 'polling'],
+      transports: ['websocket'],
+      pingTimeout: 60000,
+      pingInterval: 25000,
+      connectTimeout: 45000,
       allowEIO3: true
     });
 
