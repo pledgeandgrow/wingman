@@ -126,7 +126,7 @@ export default function ChatComponent() {
   const handleSendMessage = async () => {
     if (newMessage.trim() && selectedUser && currentUser && socket && !isSending) {
       setIsSending(true);
-      const message: Message = {
+      const message: any = {
         sender_id: currentUser.id,
         receiver_id: selectedUser.id,
         message: newMessage.trim(),
