@@ -274,12 +274,12 @@ function PostFlightPage() {
       {/* ---------------------------------------------------------------------------------------------------------------------- */}
       <div className="grid sm:grid-cols-2 gap-8 mb-8">
         <div>
-          <Label className="text-lg font-semibold mb-4 block">
+          <Label className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">
             Available Dimensions (cm)
           </Label>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="arrivalDate">Height (cm):</Label>
+              <Label htmlFor="arrivalDate" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Height (cm):</Label>
               <Input
                 id="availableHeight"
                 type="number"
@@ -287,10 +287,11 @@ function PostFlightPage() {
                 value={availableHeight}
                 onChange={(e) => setAvailableHeight(Number(e.target.value))}
                 required
+                className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
               />
             </div>
             <div>
-              <Label htmlFor="arrivalTime">Width (cm):</Label>
+              <Label htmlFor="arrivalTime" className="text-lg font-semibold mb-4 block text-gray-700 dark:text-gray-300 transition-colors duration-200">Width (cm):</Label>
               <Input
                 id="availableWidth"
                 type="number"
@@ -298,6 +299,7 @@ function PostFlightPage() {
                 value={availableWidth}
                 onChange={(e) => setAvailableWidth(Number(e.target.value))}
                 required
+                className="pl-10 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-200"
               />
             </div>
           </div>
