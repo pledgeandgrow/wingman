@@ -23,7 +23,7 @@ function formatDateTime(dateString: string) {
   })
 }
 
-export function FlightCard({ flight }: { flight: Flight }) {
+export function FlightCard({ flight }: { flight: any }) {
   const departureDateTime = formatDateTime(flight.departure_time)
   const arrivalDateTime = formatDateTime(flight.arrival_time)
   
