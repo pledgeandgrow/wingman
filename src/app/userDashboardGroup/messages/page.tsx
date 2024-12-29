@@ -80,7 +80,6 @@ export default function ChatComponent() {
         .from('users')
         .select()
         .neq('id', currentUser?.id)
-        .neq('role', '')
       
       if (error) {
         console.error('Error fetching users:', error)
