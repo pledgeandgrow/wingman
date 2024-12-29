@@ -15,11 +15,10 @@ async function startServer() {
     const httpServer = createServer(handler);
     const io = new Server(httpServer, {
       cors: {
-        origin: process.env.NEXT_PUBLIC_APP_URL || "*",
+        origin:"*",
         methods: ["GET", "POST"],
         credentials: true
       },
-      path: '/socket.io',
       transports: ['websocket'],
       pingTimeout: 60000,
       pingInterval: 25000,
