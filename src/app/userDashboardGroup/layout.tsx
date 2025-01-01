@@ -19,13 +19,13 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/toaster"
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { NotificationDropdown } from "./components/notification-dropdown"
 
 export default function Layout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -38,8 +38,8 @@ export default function Layout({
   }
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <section lang="en" >
+      <div>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -78,8 +78,8 @@ export default function Layout({
           </SidebarProvider>
           <Toaster />
         </ThemeProvider>
-      </body>
-    </html>
+      </div>
+    </section>
   )
 }
 
