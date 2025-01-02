@@ -2,9 +2,7 @@ import supabase from '@/utils/supabase'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET!, {
-  apiVersion: '2023-08-16',
-})
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET!)
 
 export async function POST(req: Request) {
   try {
