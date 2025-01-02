@@ -4,7 +4,7 @@ import { Plane } from 'lucide-react'
 import { Flight } from '@/app/types/flights'
 import { formatDateTime } from '@/lib/dateFormat'
 
-function getInitials(name: string) {
+function getInitials(name) {
   return name
     .split(' ')
     .map(part => part[0])
@@ -13,7 +13,7 @@ function getInitials(name: string) {
     .slice(0, 2)
 }
 
-export function FlightCard({ flight }: { flight: Flight }) {
+export function FlightCard({ flight }) {
   const departureDateTime = formatDateTime(flight.departure_time)
   const arrivalDateTime = formatDateTime(flight.arrival_time)
   
