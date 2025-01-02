@@ -3,16 +3,14 @@ import { headers } from 'next/headers'
 import Stripe from 'stripe'
 
 // Initialize Stripe with the secret key from environment variables
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET!, {
-  apiVersion: '2023-08-16',
-})
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET!)
 
 // Webhook secret should be set in environment variables
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
 
 export async function POST(req: Request) {
   const body = await req.text()
-  const sig = headers().get('stripe-signature')
+  const sig = (await headers()).get('stripe-signature');
 
   let event: Stripe.Event
 
