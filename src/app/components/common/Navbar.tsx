@@ -119,6 +119,7 @@ export default function Navbar() {
               Flights
                 <Earth className="mr-2 ml-2 h-4 w-4" />
               </Link>
+              
             </div>
 
             <div className="ml-6 hidden sm:flex items-center">

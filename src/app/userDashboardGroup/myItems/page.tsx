@@ -8,9 +8,11 @@ import { Pencil, Trash2, Plane, Package, MapPin, Calendar, Clock } from 'lucide-
 import supabase from '@/utils/supabase'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from "@/components/ui/badge"
-import { EditDeliveryDialog } from './components/EditDeliveryDialog'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { DeleteDeliveryDialog } from './components/DeleteDeliveryDialog'
 import { formatDistanceToNow } from 'date-fns'
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import EditDelivery from './components/EditDeliveryDialog'
 
 interface User {
   id: string
@@ -31,7 +33,15 @@ interface Delivery {
   item_weight: number
   status: string
   created_at: string
+  item_height: number
+  item_width: number
+  receiver: {
+    name: string
+  }
 }
+
+const DELIVERY_STATUSES = ['all', 'pending', 'in transit', 'delivered', 'canceled'] as const
+type DeliveryStatus = typeof DELIVERY_STATUSES[number]
 
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
@@ -48,9 +58,12 @@ const getStatusColor = (status: string) => {
   }
 }
 
+
 export default function UserDashboard() {
   const [user, setUser] = useState<User | null>(null)
   const [deliveries, setDeliveries] = useState<Delivery[]>([])
+  const [filteredDeliveries, setFilteredDeliveries] = useState<Delivery[]>([])
+  const [selectedStatus, setSelectedStatus] = useState<DeliveryStatus>('all')
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [editingDelivery, setEditingDelivery] = useState<Delivery | null>(null)
@@ -66,12 +79,26 @@ export default function UserDashboard() {
         if (userError) throw new Error(userError.message)
         setUser(user as any)
 
-        const { data: deliveriesData, error: deliveriesError } = await supabase
+        let query = supabase
           .from('deliveries')
-          .select('*')
+          .select(`
+            *,
+            receiver:receiver_id(
+              *
+            )
+            `)
+            
+            
           .eq('sender_id', user?.id)
+
+        if (selectedStatus !== 'all') {
+          query = query.eq('status', selectedStatus)
+        }
+
+        const { data: deliveriesData, error: deliveriesError } = await query
         if (deliveriesError) throw new Error(deliveriesError.message)
         setDeliveries(deliveriesData as Delivery[])
+        setFilteredDeliveries(deliveriesData as Delivery[])
 
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred')
@@ -81,7 +108,7 @@ export default function UserDashboard() {
     }
 
     fetchData()
-  }, [])
+  }, [selectedStatus])
 
   const handleEditDelivery = (delivery: Delivery) => {
     setEditingDelivery(delivery)
@@ -92,14 +119,21 @@ export default function UserDashboard() {
   }
 
   const handleEditComplete = (updatedDelivery: Delivery) => {
-    setDeliveries(deliveries.map(d => d.id === updatedDelivery.id ? updatedDelivery : d))
+    const updatedDeliveries = deliveries.map(d => 
+      d.id === updatedDelivery.id ? updatedDelivery : d
+    )
+    setDeliveries(updatedDeliveries)
+    setFilteredDeliveries(updatedDeliveries)
     setEditingDelivery(null)
   }
 
   const handleDeleteComplete = (deletedDeliveryId: string) => {
-    setDeliveries(deliveries.filter(d => d.id !== deletedDeliveryId))
+    const remainingDeliveries = deliveries.filter(d => d.id !== deletedDeliveryId)
+    setDeliveries(remainingDeliveries)
+    setFilteredDeliveries(remainingDeliveries)
     setDeletingDelivery(null)
   }
+
 
   if (isLoading) {
     return (
@@ -118,128 +152,115 @@ export default function UserDashboard() {
   }
 
   return (
-    <div className='min-h-screen '>
-    <main className="container mx-auto px-4 py-8">
-      <div className="flex justify-between flex-col sm:flex-row items-center gap-5 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold "> Dashboard des items</h1>
-          <p className="text-wing-blue dark:text-blue-300 mt-2">Welcome back, {user?.user_metadata.name}</p>
+    <div className="min-h-screen p-8 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Items</h1>
+            <p className="text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
+          </div>
+          <Link href="/userDashboardGroup/registerItem">
+            <Button variant="default">
+              <Package className="h-4 w-4 mr-2" />
+              Register Item
+            </Button>
+          </Link>
         </div>
-        <Link href="/userDashboardGroup/registerItem">
-          <Button className="flex items-center gap-2">
-            <Package className="h-4 w-4" />
-            Register New Shipment
-          </Button>
-        </Link>
-      </div>
-  
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold ">Les items actives</h2>
-          <Badge variant="secondary" className="px-3 py-1">
-            {deliveries.length} Total
-          </Badge>
-        </div>
-  
-        {deliveries.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {deliveries.map((delivery) => (
-              <Card key={delivery.id} className="hover:shadow-lg transition-shadow duration-200">
-                <CardHeader className="border-b  ">
-                  <div className="flex justify-center gap-4 items-start flex-wrap">
-                    <CardTitle className="text-lg font-semibold line-clamp-2">
-                      {delivery.item_description}
-                    </CardTitle>
-                    <Badge className={getStatusColor(delivery.status) }>
-                      {delivery.status}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-6 space-y-4">
-                  <div className="aspect-video relative rounded-lg overflow-hidden">
-                    <Image
-                      src="https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w=600"
-                      alt="Air Cargo"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-  
-                  <div className="grid gap-3 text-sm">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-gray-500 mt-1 shrink-0" />
-                      <div>
-                        <p className="font-medium">Pickup Location</p>
-                        <p className="text-gray-600">{delivery.pickup_location}</p>
-                      </div>
-                    </div>
-  
-                    <div className="flex items-start gap-2">
-                      <Plane className="h-4 w-4 text-gray-500 mt-1 shrink-0" />
-                      <div>
-                        <p className="font-medium">Destination</p>
-                        <p className="text-gray-600">{delivery.dropoff_location}</p>
-                      </div>
-                    </div>
-  
-                    <div className="grid grid-cols-2 gap-4 pt-2">
-                      <div className="flex items-center gap-2">
-                        <Package className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-600">{delivery.item_weight} KG</span>
-                      </div>
-                      <div className="flex items-start gap-2 justify-center">
-                        <Clock className="h-4 mt-1 w-4 text-gray-500" />
-                        
-                        <span className="text-gray-600">  
-                           added {formatDistanceToNow(new Date(delivery.created_at), { addSuffix: true })}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-end gap-2 border-t p-3">
-                  <Button variant="outline" size="sm" onClick={() => handleEditDelivery(delivery)}>
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => handleDeleteDelivery(delivery)}>
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </Button>
-                </CardFooter>
-              </Card>
+
+        <Tabs value={selectedStatus} onValueChange={(value) => setSelectedStatus(value as DeliveryStatus)}>
+          <TabsList className="w-full h-12 mb-8 bg-white rounded-lg shadow">
+            {DELIVERY_STATUSES.map((status) => (
+              <TabsTrigger
+                key={status}
+                value={status}
+                className="flex-1 data-[state=active]:bg-wing-blue data-[state=active]:text-white"
+              >
+                {status.charAt(0).toUpperCase() + status.slice(1)}
+              </TabsTrigger>
             ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 bg-white rounded-lg border">
-            <Package className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Shipments Yet</h3>
-            <p className="text-gray-500 mb-4">Start by registering your first air cargo shipment</p>
-            <Link href="/userDashboardGroup/registerItem">
-              <Button variant="outline">Register New Shipment</Button>
-            </Link>
-          </div>
-        )}
+          </TabsList>
+
+          <TabsContent value={selectedStatus}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredDeliveries.map((delivery) => (
+                <div key={delivery.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Package className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">{delivery.item_description.split(' ')[0]}</div>
+                          <div className="text-sm text-gray-500">
+                            {delivery.item_description.length > 20
+                              ? delivery.item_description.substring(0, 20) + '...'
+                              : delivery.item_description}
+                          </div>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {delivery.status}
+                      </Badge>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Dimensions</div>
+                        <div className="text-sm text-gray-900">{delivery.item_height} x {delivery.item_width} x {delivery.item_weight} cm</div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-500">Weight</div>
+                        <div className="text-sm text-gray-900">{delivery.item_weight} KG</div>
+                      </div>
+                    </div>
+                    <div className="mb-4">
+                      <div className="text-sm font-medium text-gray-500">Route</div>
+                      <div className="text-sm text-gray-900">
+                        From {delivery.pickup_location} to {delivery.dropoff_location}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback>
+                            {delivery.receiver?.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="text-sm font-medium text-gray-900">{delivery.receiver?.name}</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" onClick={() => handleEditDelivery(delivery)}>
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteDelivery(delivery)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
-    </main>
-  
-    {editingDelivery && (
-      <EditDeliveryDialog
-        delivery={editingDelivery}
-        onClose={() => setEditingDelivery(null)}
-        onEdit={handleEditComplete}
-      />
-    )}
-  
-    {deletingDelivery && (
-      <DeleteDeliveryDialog
-        delivery={deletingDelivery}
-        onClose={() => setDeletingDelivery(null)}
-        onDelete={handleDeleteComplete}
-      />
-    )}
-  </div>
-  
+
+      {editingDelivery && (
+        <EditDelivery
+          delivery={editingDelivery}
+          onClose={() => setEditingDelivery(null)}
+          onEdit={handleEditComplete}
+        />
+      )}
+
+      {deletingDelivery && (
+        <DeleteDeliveryDialog
+          delivery={deletingDelivery}
+          onClose={() => setDeletingDelivery(null)}
+          onDelete={handleDeleteComplete}
+        />
+      )}
+    </div>
   )
 }
 

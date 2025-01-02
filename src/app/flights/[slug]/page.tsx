@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Clock, Plane, Weight, User, Mail } from 'lucide-react'
 import { loadStripe } from '@stripe/stripe-js'
+import { useSupabaseUser } from '@/app/hooks/getSession'
 
 
 
@@ -25,6 +26,8 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const [flight, setFlight] = useState<Flight | null>(null)
+  const {user} = useSupabaseUser()
+
 
   const resolvedParams = React.use(params)
 
@@ -50,17 +53,29 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
   }
 
   const handleBooking = async () => {
+    if (!user) {
+      // Redirect to login or show a message
+      router.push('/login')
+      return
+    }
+
     setLoading(true)
     try {
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
-       
-        body:  flight.id 
-     })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          flightId: params.slug,
+          userId: user.id,
+          email: user.email,
+        })
+      })
       const { sessionId } = await response.json()
       if (sessionId) {
         const stripe = await stripePromise
-        const { error } = await stripe.redirectToCheckout({ sessionId })
+        const { error } = await stripe!.redirectToCheckout({ sessionId })
         if (error) {
           console.error('Error redirecting to checkout:', error)
         }

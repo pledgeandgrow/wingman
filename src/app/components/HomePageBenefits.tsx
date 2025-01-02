@@ -32,7 +32,7 @@ function HomePageBenefits() {
   return (
 	<div className="w-full max-w-6xl mx-auto p-4 space-y-8">
 		<div className='flex flex-col items-center justify-between gap-4'>
-		<h2 className='text-2xl md:text-4xl text-center'> <span className='text-wing-cyan'>Wingman</span> benefits for you</h2>
+		<h2 className='text-2xl md:text-4xl text-center text-white dark:text-wing-blue'> <span className='text-wing-cyan'>Wingman</span> benefits for you</h2>
 		<p className='w-[50%] text-center'>Wingman is designed to make your life simpler and more efficient with its suite of user-friendly features and dedicated support.</p>
 		</div>
       {sections.map((section, index) => (
@@ -45,7 +45,7 @@ function HomePageBenefits() {
               {index + 1}
             </div>
             <div>
-              <h2 className="text-xl font-bold mb-2">{section.title}</h2>
+              <h2 className="text-xl font-bold mb-2 text-wing-cyan">{section.title}</h2>
               <p className="text-gray-600">{section.description}</p>
             </div>
           </div>

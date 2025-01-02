@@ -25,6 +25,8 @@ interface RegisterItemFormProps {
 export default function RegisterItemForm({ userId }: RegisterItemFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [weight, setWeight] = useState([10])
+  const [height, setHeight] = useState([10])
+  const [width, setWidth] = useState([10])
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [receivers, setReceivers] = useState<Receiver[]>([])
   const [selectedReceiver, setSelectedReceiver] = useState<string>("")
@@ -69,6 +71,8 @@ export default function RegisterItemForm({ userId }: RegisterItemFormProps) {
           dropoff_location: formData.get('dropoff_location'),
           item_description: formData.get('description'),
           item_weight: weight[0],
+          item_height: height[0],
+          item_width: width[0],
           status: 'pending'
         })
 
@@ -177,6 +181,42 @@ export default function RegisterItemForm({ userId }: RegisterItemFormProps) {
             className="w-full"
           />
           <div className="text-right mt-2">{weight[0]} KG</div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="height" className="text-lg font-semibold">
+          Item Height (CM)
+        </Label>
+        <div className="px-2">
+          <Slider
+            id="height"
+            name="height"
+            value={height}
+            onValueChange={setHeight}
+            max={300}
+            step={1}
+            className="w-full"
+          />
+          <div className="text-right mt-2">{height[0]} CM</div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="width" className="text-lg font-semibold">
+          Item Width (CM)
+        </Label>
+        <div className="px-2">
+          <Slider
+            id="width"
+            name="width"
+            value={width}
+            onValueChange={setWidth}
+            max={300}
+            step={1}
+            className="w-full"
+          />
+          <div className="text-right mt-2">{width[0]} CM</div>
         </div>
       </div>
 
