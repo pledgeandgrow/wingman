@@ -157,7 +157,6 @@ export default function UserDashboard() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Items</h1>
-            <p className="text-sm text-gray-500">These companies have purchased in the last 12 months.</p>
           </div>
           <Link href="/userDashboardGroup/registerItem">
             <Button variant="default">

@@ -18,4 +18,3 @@ export function FlightResults({ flights }: { flights: Flight[] }) {
     </main>
   )
 }
-

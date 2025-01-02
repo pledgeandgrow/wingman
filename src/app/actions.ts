@@ -10,9 +10,7 @@ export async function getFlights(searchParams: { [key: string]: string | string[
     .select(`
       *,
       wingman:wingman_id (
-        id,
-        name,
-        email
+        *
       )
     `)
 
