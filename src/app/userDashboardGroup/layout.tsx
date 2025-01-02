@@ -40,11 +40,7 @@ export default function Layout({
   return (
     <section lang="en" >
       <div>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
+        
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
@@ -64,7 +60,6 @@ export default function Layout({
             </SidebarInset>
           </SidebarProvider>
           <Toaster />
-        </ThemeProvider>
       </div>
     </section>
   )
