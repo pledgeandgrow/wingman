@@ -25,7 +25,7 @@ interface Delivery {
 interface EditDeliveryProps {
   delivery: Delivery
   onClose: () => void
-  onEdit: (updatedDelivery: Delivery) => void
+  onEdit: (updatedDelivery: any) => void
 }
 
 export const EditDelivery = ({ delivery, onClose, onEdit }: EditDeliveryProps) => {
