@@ -67,7 +67,7 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          flightId: params.slug,
+          flightId: resolvedParams.slug, // Fixed: Use resolvedParams instead of params//+
           userId: user.id,
           email: user.email,
         })
