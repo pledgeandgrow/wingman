@@ -54,7 +54,6 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
 
   const handleBooking = async () => {
     if (!user) {
-      // Redirect to login or show a message
       router.push('/login')
       return
     }
@@ -67,7 +66,7 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          flightId: resolvedParams.slug, // Fixed: Use resolvedParams instead of params//+
+          flightId: resolvedParams.slug,
           userId: user.id,
           email: user.email,
         })
