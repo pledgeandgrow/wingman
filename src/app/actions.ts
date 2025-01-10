@@ -3,6 +3,22 @@
 import  supabase  from '@/utils/supabase'
 import { Flight } from './types/flights'
 
+
+export async function getAvailableWeights() {
+  
+  const { data, error } = await supabase
+    .from('flights')
+    .select('available_weight')
+    .order('available_weight')
+
+  if (error) {
+    console.error('Error fetching available weights:', error)
+    return []
+  }
+
+  return Array.from(new Set(data.map(item => item.available_weight)))
+}
+
 export async function getFlights(searchParams: { [key: string]: string | string[] | undefined }): Promise<Flight[]> {
   try {
     let query = supabase
