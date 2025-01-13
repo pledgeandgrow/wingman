@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { getFlights, getAvailableWeights } from '../actions'
 import { FlightResults } from '@/components/flight-results'
-import FilterSidebar, { EnhancedFilterSidebar } from '@/components/filter-sidebar'
+import  { EnhancedFilterSidebar } from '@/components/filter-sidebar'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,7 +19,7 @@ export default async function FlightsPage({
   ))).sort()
 
   // Calculate flight duration in hours
-  const calculateDuration = (flight: Flight) => {
+  const calculateDuration = (flight:any) => {
     const start = new Date(flight.departure_time)
     const end = new Date(flight.arrival_time)
     return (end.getTime() - start.getTime()) / (1000 * 60 * 60) // Convert to hours
