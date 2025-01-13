@@ -15,7 +15,7 @@ import React, { useEffect, useState } from 'react'
 
 export const dynamic = 'force-dynamic'
 
-export default  function SelectDeliveryPage({ searchParams }: { searchParams: { flightId: string } }) {
+export default  function SelectDeliveryPage({ searchParams }: { searchParams: any }) {
   const [deliveries,setDeliveries]=useState([])
   
  
