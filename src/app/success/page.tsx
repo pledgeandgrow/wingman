@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import { redirect } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import {
@@ -16,46 +15,45 @@ import React, { useEffect, useState } from 'react'
 
 export const dynamic = 'force-dynamic'
 
-interface Delivery {
-  id: string;
-  pickup_location: string;
-  dropoff_location: string;
-  item_description: string;
-  item_weight: number;
-  status: string;
-}
+export default  function SelectDeliveryPage({ searchParams }: { searchParams: { flightId: string } }) {
+  const [deliveries,setDeliveries]=useState([])
+  
+ 
 
-export default function SelectDeliveryPage({ searchParams }: { searchParams: any }) {
-  const [deliveries, setDeliveries] = useState<Delivery[]>([])
+ useEffect(() => {
+     const getDeliveries=async()=>{
+      const {data:{user}}=await supabase.auth.getUser()  
 
-  useEffect(() => {
-    const getDeliveries = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-
-      const { data: deliveriesData, error } = await supabase
-        .from('deliveries')
-        .select('*')
-        .eq('sender_id', user?.id)
-
-      if (error) {
-        console.error('Error fetching deliveries:', error)
-        return
-      }
-      setDeliveries(deliveriesData as Delivery[])
+      const { data: deliveries, error } = await supabase
+      .from('deliveries')
+      .select('*')
+      .eq('sender_id', user?.id)
+    
+    if (error) {
+      console.error('Error fetching deliveries:', error)
+      return <div>Error loading deliveries. Please try again.</div>
     }
-    getDeliveries()
-  }, [])
+    setDeliveries(deliveries)
 
-  const resolvedParams = searchParams as { flightId: string }
+      
+     }
+     getDeliveries()
+ 
+   
+ }, [])
+ 
+ const resolvedParams = React.use(searchParams)
 
   async function createFlight(formData: FormData) {
+    
     const deliveryId = formData.get('deliveryId') as string
     const WINGMAN_ID = '22b8356e-ad1c-4863-86ba-080e627bcc66'
+
 
     const { data, error } = await supabase
       .from('deliveries')
       .update([
-        { flight_id: resolvedParams.flightId, wingman_id: WINGMAN_ID }
+        { flight_id: resolvedParams?.flightId, wingman_id: WINGMAN_ID }
       ])
       .eq('id', deliveryId)
       .select()
@@ -64,6 +62,8 @@ export default function SelectDeliveryPage({ searchParams }: { searchParams: any
       console.error('Error creating flight:', error)
       return { success: false, error: 'Failed to create flight' }
     }
+    console.log(data)
+
   }
 
   return (
