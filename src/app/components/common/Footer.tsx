@@ -25,8 +25,6 @@ function Footer() {
               <ul className="space-y-2">
                 <li><Link href="/aboutus" className="text-gray-50 hover:text-gray-300 transition-colors">About us</Link></li>
                 <li><Link href="/becomeWingman" className="text-gray-50 hover:text-gray-300 transition-colors">Become a wingman</Link></li>
-                <li><Link href="/myFlights" className="text-gray-50 hover:text-gray-300 transition-colors">My Flights</Link></li>
-                <li><Link href="/myItems" className="text-gray-50 hover:text-gray-300 transition-colors">My Items</Link></li>
                 <li><Link href="/gift-card" className="text-gray-50 hover:text-gray-300 transition-colors">Gift Cards</Link></li>
                 <li><Link href="/e-sim" className="text-gray-50 hover:text-gray-300 transition-colors">E SIM</Link></li>
                 <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Investors</Link></li>
@@ -37,11 +35,8 @@ function Footer() {
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Info Contact</h2>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Lorem ipsum dolor sit amet consectetur.</Link></li>
                 <li><Link href="/bookWingman" className="text-gray-50 hover:text-gray-300 transition-colors">bookwingman</Link></li>
-                <li><Link href="/myProfile" className="text-gray-50 hover:text-gray-300 transition-colors">MyProfile</Link></li>
-                <li><Link href="/editProfile" className="text-gray-50 hover:text-gray-300 transition-colors">EditProfile</Link></li>
-                <li><Link href="/userProfile" className="text-gray-50 hover:text-gray-300 transition-colors">UserProfile</Link></li>
+               
               </ul>
             </div>
             <div className="mb-8">
