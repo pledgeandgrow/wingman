@@ -75,23 +75,24 @@ function Footer() {
           <span>© 2024 Wingman, Inc.</span>
           <span>·</span>
           <a href="#" className="hover:underline">
-            Confidentialité
+           confidentiality
+
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
-            Conditions générales
+            Genaral Conditions
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
-            Plan du site
+            Site Plan 
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
-            Fonctionnement du site
+            How it works
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
-            Infos sur l’entreprise
+            Company informations
           </a>
         </div>
 
