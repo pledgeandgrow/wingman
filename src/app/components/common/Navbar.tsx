@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Menu, Send, Plus, User2, Earth, MenuIcon, LogOut, Search } from 'lucide-react'
+import { Menu, Send, Plus, User2, MenuIcon, LogOut, Search } from 'lucide-react'
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -78,6 +78,12 @@ export default function Navbar() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
         <Link href="/userDashboardGroup/myItems">Register an item</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+        <Link href="/userDashboardGroup/messages">Chat</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+        <Link href="/userDashboardGroup/billing">billing</Link>
         </DropdownMenuItem>
        
         <DropdownMenuSeparator />
@@ -161,14 +167,20 @@ export default function Navbar() {
             {authenticated ? (
               <div className="space-y-1">
                 <p className="block px-4 py-2 text-base font-medium text-gray-500">{user?.email}</p>
-                <Link href="/myFlights" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                <Link href="/userDashboardGroup/myFlights" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
                   My Flights
                 </Link>
-                <Link href="/myItems" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                <Link href="/userDashboardGroup/myItems" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
                   My Items
                 </Link>
-                <Link href="/myProfile" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                <Link href="/userDashboardGroup/myProfile" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
                   Profile
+                </Link>
+                <Link href="/userDashboardGroup/billing" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                  Billing
+                </Link>
+                <Link href="/userDashboardGroup/messages" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                  Chat
                 </Link>
                 <div className=' w-full mx-auto flex justify-center'>
                   <Button onClick={handleLogOut} className="w-[80%] mx-auto  text-left px-4 py-2 text-base font-medium ">

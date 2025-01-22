@@ -29,7 +29,7 @@ export function EnhancedFilterSidebar({
   
   // States for filters
   const [date, setDate] = useState<string>('')
-  const [duration, setDuration] = useState<[number, number]>([0, 200])
+  const [duration, setDuration] = useState<[number, number]>([0, 1000])
   const [weight, setWeight] = useState<number>(0) // Updated weight state
   
   // Calculate flight duration in hours
