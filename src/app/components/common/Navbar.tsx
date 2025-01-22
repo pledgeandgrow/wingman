@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Menu, Send, Plus, User2, Earth, MenuIcon, LogOut } from 'lucide-react'
+import { Menu, Send, Plus, User2, Earth, MenuIcon, LogOut, Search } from 'lucide-react'
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -71,10 +71,13 @@ export default function Navbar() {
           <Link href="/userDashboardGroup">Dashboard</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/userDashboardGroup/postFlight">Post a flight</Link>
+          <Link href="/userDashboardGroup/billing">My Billing</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-        <Link href="/userDashboardGroup/registerItem">Register an item</Link>
+          <Link href="/userDashboardGroup/myFlights">Post a flight</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+        <Link href="/userDashboardGroup/myItems">Register an item</Link>
         </DropdownMenuItem>
        
         <DropdownMenuSeparator />
@@ -110,10 +113,11 @@ export default function Navbar() {
               </Link>
               <Link href="/flights" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
               Flights
-                <Earth className="mr-2 ml-2 h-4 w-4" />
+                <Search className="mr-2 ml-2 h-4 w-4" />
               </Link>
               
             </div>
+
 
             <div className="ml-6 hidden sm:flex items-center">
               <div className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">

@@ -47,13 +47,22 @@ export default  function SelectDeliveryPage({ searchParams }: { searchParams: { 
   async function createFlight(formData: FormData) {
     
     const deliveryId = formData.get('deliveryId') as string
-    const WINGMAN_ID = '22b8356e-ad1c-4863-86ba-080e627bcc66'
+    const { data:flightwing, error:otherErorr } = await supabase
+      .from('flights')
+      .select(`
+            *,
+            wingman:wingman_id(*)
+           `)
+      
+      .eq('id', resolvedParams?.flightId)
+      
+      console.log(flightwing)
 
 
     const { data, error } = await supabase
       .from('deliveries')
       .update([
-        { flight_id: resolvedParams?.flightId, wingman_id: WINGMAN_ID }
+        { flight_id: resolvedParams?.flightId, wingman_id: '22b8356e-ad1c-4863-86ba-080e627bcc66' }
       ])
       .eq('id', deliveryId)
       .select()
