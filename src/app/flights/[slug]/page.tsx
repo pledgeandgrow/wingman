@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { getFlights } from '@/app/actions'
-import { Flight } from '@/app/types/flights'
-import { format, differenceInMinutes } from 'date-fns'
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { getFlights } from "@/app/actions"
+import type { Flight } from "@/app/types/flights"
+import { format, differenceInMinutes } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
-import { Clock, Plane, Weight, User, Mail } from 'lucide-react'
-import { loadStripe } from '@stripe/stripe-js'
-import { useSupabaseUser } from '@/app/hooks/getSession'
-
-
+import { Clock, Plane, Weight, User, Mail } from "lucide-react"
+import { useSupabaseUser } from "@/app/hooks/getSession"
+import SelectDelivery from "@/app/success/components/delivery-selection"
+import supabase from "@/utils/supabase"
+import { loadStripe } from "@stripe/stripe-js"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC!)
 
@@ -26,14 +26,30 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const [flight, setFlight] = useState<Flight | null>(null)
-  const {user} = useSupabaseUser()
-
+  const [deliveries, setDeliveries] = useState([])
+  const { user } = useSupabaseUser()
+  const [selectedDeliveryId, setSelectedDeliveryId] = useState<string | null>(null)
 
   const resolvedParams = React.use(params)
 
   useEffect(() => {
     getFlightDetails(resolvedParams.slug).then(setFlight)
   }, [resolvedParams.slug])
+
+  useEffect(() => {
+    const getDeliveries = async () => {
+      if (user?.id) {
+        const { data, error } = await supabase.from("deliveries").select("*").eq("sender_id", user.id)
+
+        if (error) {
+          console.error("Error fetching deliveries:", error)
+        } else {
+          setDeliveries(data || [])
+        }
+      }
+    }
+    getDeliveries()
+  }, [user])
 
   if (!flight) {
     return <div>Loading...</div>
@@ -54,35 +70,36 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
 
   const handleBooking = async () => {
     if (!user) {
-      router.push('/login')
+      router.push("/login")
       return
     }
 
     setLoading(true)
     try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           flightId: resolvedParams.slug,
           userId: user.id,
           email: user.email,
-        })
+          deliveryId: selectedDeliveryId,
+        }),
       })
       const { sessionId } = await response.json()
       if (sessionId) {
         const stripe = await stripePromise
         const { error } = await stripe!.redirectToCheckout({ sessionId })
         if (error) {
-          console.error('Error redirecting to checkout:', error)
+          console.error("Error redirecting to checkout:", error)
         }
       } else {
-        throw new Error('Failed to create checkout session')
+        throw new Error("Failed to create checkout session")
       }
     } catch (error) {
-      console.error('Error creating checkout session:', error)
+      console.error("Error creating checkout session:", error)
     } finally {
       setLoading(false)
     }
@@ -100,13 +117,17 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
           </div>
         </CardHeader>
         <CardContent className="p-6">
+          <SelectDelivery flightId={flight.id} onSelectDelivery={setSelectedDeliveryId} />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold mb-4">Flight Information</h2>
               <div className="flex items-center space-x-2">
                 <Plane className="text-blue-500" />
                 <div>
-                  <p className="font-medium">{flight.departure_airport} → {flight.arrival_airport}</p>
+                  <p className="font-medium">
+                    {flight.departure_airport} → {flight.arrival_airport}
+                  </p>
                   <p className="text-sm text-gray-500">
                     {formatDateTime(flight.departure_time)} - {formatDateTime(flight.arrival_time)}
                   </p>
@@ -114,22 +135,30 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
               </div>
               <div className="flex items-center space-x-2">
                 <Weight className="text-green-500" />
-                <p><span className="font-medium">Available Weight:</span> {flight.available_weight} kg</p>
+                <p>
+                  <span className="font-medium">Available Weight:</span> {flight.available_weight} kg
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="text-orange-500" />
-                <p><span className="font-medium">Created at:</span> {formatDateTime(flight.created_at)}</p>
+                <p>
+                  <span className="font-medium">Created at:</span> {formatDateTime(flight.created_at)}
+                </p>
               </div>
             </div>
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold mb-4">Wingman Information</h2>
               <div className="flex items-center space-x-2">
                 <User className="text-indigo-500" />
-                <p><span className="font-medium">Name:</span> {flight.wingman.name}</p>
+                <p>
+                  <span className="font-medium">Name:</span> {flight.wingman.name}
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="text-red-500" />
-                <p><span className="font-medium">Email:</span> {flight.wingman.email}</p>
+                <p>
+                  <span className="font-medium">Email:</span> {flight.wingman.email}
+                </p>
               </div>
             </div>
           </div>
@@ -140,13 +169,17 @@ export default function FlightDetailPage({ params }: { params: Promise<{ slug: s
           </div>
         </CardContent>
         <CardFooter className="bg-gray-50 p-6">
-          <Button 
-            onClick={handleBooking} 
-            disabled={loading}
-            className="w-full bg-wing-blue hover:bg-wing-cyan text-white font-bold py-2 px-4 rounded"
-          >
-            {loading ? 'Processing...' : 'Book this Flight'}
-          </Button>
+          {deliveries.length > 0 ? (
+            <Button
+              onClick={handleBooking}
+              disabled={loading}
+              className="w-full bg-wing-blue hover:bg-wing-cyan text-white font-bold py-2 px-4 rounded"
+            >
+              {loading ? "Processing..." : "Book this Flight"}
+            </Button>
+          ) : (
+            "Add item to book this flight"
+          )}
         </CardFooter>
       </Card>
     </div>

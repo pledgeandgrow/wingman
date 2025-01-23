@@ -29,13 +29,14 @@ export async function POST(req: Request) {
       console.log('PaymentIntent was successful!')
       
       const flightId = paymentIntentSucceeded.metadata.flightId
+      const userId = paymentIntentSucceeded.metadata.userId
+      const deliveryId = paymentIntentSucceeded.metadata.deliveryId
+
 
       if (flightId) {
         const { data, error } = await supabase
-          .from('flights')
-          .update({ sender_paid: true })
-          .eq('id', flightId)
-          .select()
+          .from('bookers_flights')
+          .insert({ sender_id: userId, delivery_id :deliveryId , flight_id: flightId , booked:true })
 
         if (error) {
           console.error('Error updating Supabase:', error)
@@ -43,9 +44,9 @@ export async function POST(req: Request) {
         }
 
         if (data) {
-          console.log(`Updated sender_paid status for flight ${flightId}:`, data)
+          console.log( data)
         } else {
-          console.log(`No rows updated for flight ${flightId}`)
+          console.log(error)
         }
       } else {
         console.error('Missing flightId in payment intent metadata')

@@ -32,7 +32,7 @@ async function updateCustomerIdInSupabase(userId: string, stripeCustomerId: stri
 
 export async function POST(req: Request) {
   try {
-    const { flightId, userId, email } = await req.json()
+    const { flightId, userId, email , deliveryId } = await req.json()
 
     if (!flightId || !userId || !email) {
       return NextResponse.json({ error: 'Flight ID, User ID, and email are required' }, { status: 400 })
@@ -108,11 +108,14 @@ export async function POST(req: Request) {
         metadata: {
           flightId: flightId,
           userId: userId,
+          deliveryId:deliveryId
         },
       },
       metadata: {
         flightId: flightId,
         userId: userId,
+        deliveryId:deliveryId
+
       },
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?flightId=${flightId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`,
