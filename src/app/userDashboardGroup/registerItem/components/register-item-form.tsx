@@ -84,7 +84,7 @@ export default function RegisterItemForm({ userId }: RegisterItemFormProps) {
       })
 
       router.push('/userDashboardGroup/myItems')
-      router.refresh()
+      window.location.reload()
     } catch (error) {
       toast({
         title: "Error",
