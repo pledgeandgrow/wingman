@@ -1,18 +1,16 @@
 "use client"
 
-import { useEffect, useState } from 'react'
-import Link from "next/link"
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Pencil, Trash2, Plane, Package, MapPin, Calendar, Clock } from 'lucide-react'
-import supabase from '@/utils/supabase'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2, Package } from "lucide-react"
+import supabase from "@/utils/supabase"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { DeleteDeliveryDialog } from './components/DeleteDeliveryDialog'
-import { formatDistanceToNow } from 'date-fns'
+import { DeleteDeliveryDialog } from "./components/DeleteDeliveryDialog"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import EditDelivery from './components/EditDeliveryDialog'
+import EditDelivery from "./components/EditDeliveryDialog"
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
+import RegisterItem from "../registerItem/page"
 
 interface User {
   id: string
@@ -40,34 +38,34 @@ interface Delivery {
   }
 }
 
-const DELIVERY_STATUSES = ['all', 'pending', 'in transit', 'delivered', 'canceled'] as const
-type DeliveryStatus = typeof DELIVERY_STATUSES[number]
+const DELIVERY_STATUSES = ["all", "pending", "in transit", "delivered", "canceled"] as const
+type DeliveryStatus = (typeof DELIVERY_STATUSES)[number]
 
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800'
-    case 'in transit':
-      return 'bg-blue-100 text-blue-800'
-    case 'delivered':
-      return 'bg-green-100 text-green-800'
-    case 'cancelled':
-      return 'bg-red-100 text-red-800'
+    case "pending":
+      return "bg-yellow-100 text-yellow-800"
+    case "in transit":
+      return "bg-blue-100 text-blue-800"
+    case "delivered":
+      return "bg-green-100 text-green-800"
+    case "cancelled":
+      return "bg-red-100 text-red-800"
     default:
-      return 'bg-gray-100 text-gray-800'
+      return "bg-gray-100 text-gray-800"
   }
 }
-
 
 export default function UserDashboard() {
   const [user, setUser] = useState<User | null>(null)
   const [deliveries, setDeliveries] = useState<Delivery[]>([])
   const [filteredDeliveries, setFilteredDeliveries] = useState<Delivery[]>([])
-  const [selectedStatus, setSelectedStatus] = useState<DeliveryStatus>('all')
+  const [selectedStatus, setSelectedStatus] = useState<DeliveryStatus>("all")
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [editingDelivery, setEditingDelivery] = useState<Delivery | null>(null)
   const [deletingDelivery, setDeletingDelivery] = useState<Delivery | null>(null)
+  const [isRegisterItemOpen, setIsRegisterItemOpen] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -75,33 +73,33 @@ export default function UserDashboard() {
         setIsLoading(true)
         setError(null)
 
-        const { data: { user }, error: userError } = await supabase.auth.getUser()
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser()
         if (userError) throw new Error(userError.message)
         setUser(user as any)
 
         let query = supabase
-          .from('deliveries')
+          .from("deliveries")
           .select(`
             *,
             receiver:receiver_id(
               *
             )
             `)
-            
-            
-          .eq('sender_id', user?.id)
+          .eq("sender_id", user?.id)
 
-        if (selectedStatus !== 'all') {
-          query = query.eq('status', selectedStatus)
+        if (selectedStatus !== "all") {
+          query = query.eq("status", selectedStatus)
         }
 
         const { data: deliveriesData, error: deliveriesError } = await query
         if (deliveriesError) throw new Error(deliveriesError.message)
         setDeliveries(deliveriesData as Delivery[])
         setFilteredDeliveries(deliveriesData as Delivery[])
-
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred')
+        setError(err instanceof Error ? err.message : "An unknown error occurred")
       } finally {
         setIsLoading(false)
       }
@@ -119,21 +117,18 @@ export default function UserDashboard() {
   }
 
   const handleEditComplete = (updatedDelivery: Delivery) => {
-    const updatedDeliveries = deliveries.map(d => 
-      d.id === updatedDelivery.id ? updatedDelivery : d
-    )
+    const updatedDeliveries = deliveries.map((d) => (d.id === updatedDelivery.id ? updatedDelivery : d))
     setDeliveries(updatedDeliveries)
     setFilteredDeliveries(updatedDeliveries)
     setEditingDelivery(null)
   }
 
   const handleDeleteComplete = (deletedDeliveryId: string) => {
-    const remainingDeliveries = deliveries.filter(d => d.id !== deletedDeliveryId)
+    const remainingDeliveries = deliveries.filter((d) => d.id !== deletedDeliveryId)
     setDeliveries(remainingDeliveries)
     setFilteredDeliveries(remainingDeliveries)
     setDeletingDelivery(null)
   }
-
 
   if (isLoading) {
     return (
@@ -158,12 +153,18 @@ export default function UserDashboard() {
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Items</h1>
           </div>
-          <Link href="/userDashboardGroup/registerItem">
-            <Button variant="default">
-              <Package className="h-4 w-4 mr-2" />
-              Register Item
-            </Button>
-          </Link>
+          <Dialog open={isRegisterItemOpen} onOpenChange={setIsRegisterItemOpen}>
+            <DialogTrigger asChild>
+              <Button variant="default">
+                <Package className="h-4 w-4 mr-2" />
+                Register Item
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogTitle className="sr-only">Register Item</DialogTitle>
+              <RegisterItem />
+            </DialogContent>
+          </Dialog>
         </div>
 
         <Tabs value={selectedStatus} onValueChange={(value) => setSelectedStatus(value as DeliveryStatus)}>
@@ -182,7 +183,10 @@ export default function UserDashboard() {
           <TabsContent value={selectedStatus}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDeliveries.map((delivery) => (
-                <div key={delivery.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div
+                  key={delivery.id}
+                  className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
@@ -190,10 +194,10 @@ export default function UserDashboard() {
                           <Package className="h-5 w-5 text-primary" />
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{delivery.item_description.split(' ')[0]}</div>
+                          <div className="font-medium text-gray-900">{delivery.item_description.split(" ")[0]}</div>
                           <div className="text-sm text-gray-500">
                             {delivery.item_description.length > 20
-                              ? delivery.item_description.substring(0, 20) + '...'
+                              ? delivery.item_description.substring(0, 20) + "..."
                               : delivery.item_description}
                           </div>
                         </div>
@@ -205,7 +209,9 @@ export default function UserDashboard() {
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>
                         <div className="text-sm font-medium text-gray-500">Dimensions</div>
-                        <div className="text-sm text-gray-900">{delivery.item_height} x {delivery.item_width} x {delivery.item_weight} cm</div>
+                        <div className="text-sm text-gray-900">
+                          {delivery.item_height} x {delivery.item_width} x {delivery.item_weight} cm
+                        </div>
                       </div>
                       <div>
                         <div className="text-sm font-medium text-gray-500">Weight</div>
@@ -222,7 +228,11 @@ export default function UserDashboard() {
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
                           <AvatarFallback>
-                            {delivery.receiver?.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                            {delivery.receiver?.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")
+                              .toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         <div className="text-sm font-medium text-gray-900">{delivery.receiver?.name}</div>
@@ -245,11 +255,7 @@ export default function UserDashboard() {
       </div>
 
       {editingDelivery && (
-        <EditDelivery
-          delivery={editingDelivery}
-          onClose={() => setEditingDelivery(null)}
-          onEdit={handleEditComplete}
-        />
+        <EditDelivery delivery={editingDelivery} onClose={() => setEditingDelivery(null)} onEdit={handleEditComplete} />
       )}
 
       {deletingDelivery && (
