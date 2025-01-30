@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import PostFlightPage from "../postFlight/page"
 
 interface User {
   id: string
@@ -94,8 +95,17 @@ export default function MyFlights() {
     <main className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row flex-wrap gap-3 mb-8">
         <h1 className="text-2xl font-bold">Welcome {user?.name}</h1>
-        <Link href={'/userDashboardGroup/postFlight'} className={buttonVariants()}>Post a flight</Link>
-      </div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Post a flight</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Post a Flight</DialogTitle>
+            </DialogHeader>
+            <PostFlightPage  />
+          </DialogContent>
+        </Dialog>      </div>
 
       <div className="space-y-6">
         <h2 className="text-2xl text-center font-semibold">All Flights</h2>

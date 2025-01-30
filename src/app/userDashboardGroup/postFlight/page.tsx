@@ -120,6 +120,7 @@ function PostFlightPage() {
         description: "Your flight has been posted successfully!",
       });
       router.push("/userDashboardGroup/myFlights");
+      window.location.reload();
     } catch (error) {
       console.error("Error posting flight:", error);
       toast({
