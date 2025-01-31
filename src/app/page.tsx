@@ -22,9 +22,6 @@ export default function Home() {
     <div >
      <Hero/>
       
-    <HomePageBenefits/>
-
-      
       
     </div>
   );
