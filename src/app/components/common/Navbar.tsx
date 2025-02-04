@@ -74,17 +74,15 @@ export default function Navbar() {
           <Link href="/userDashboardGroup/billing">My Billing</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/userDashboardGroup/myFlights">Post a flight</Link>
+          <Link href="/userDashboardGroup/myFlights">My flights</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-        <Link href="/userDashboardGroup/myItems">Register an item</Link>
+        <Link href="/userDashboardGroup/myItems">My items</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-        <Link href="/userDashboardGroup/messages">Chat</Link>
+        <Link href="/userDashboardGroup/messages">My Chat</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-        <Link href="/userDashboardGroup/billing">billing</Link>
-        </DropdownMenuItem>
+        
        
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogOut}>
@@ -118,7 +116,7 @@ export default function Navbar() {
                 New to wingman ?
               </Link>
               <Link href="/flights" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-md font-medium text-black hover:text-gray-500">
-              Flights
+              Search a flight
                 <Search className="mr-2 ml-2 h-4 w-4" />
               </Link>
               
@@ -160,7 +158,7 @@ export default function Navbar() {
               New to wingman ?
             </Link>
             <Link href="/flights" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700">
-              Flights
+              Search a flight 
             </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
@@ -174,13 +172,13 @@ export default function Navbar() {
                   My Items
                 </Link>
                 <Link href="/userDashboardGroup/myProfile" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                  Profile
+                  My Profile
                 </Link>
                 <Link href="/userDashboardGroup/billing" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                  Billing
+                  My Billing
                 </Link>
                 <Link href="/userDashboardGroup/messages" className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                  Chat
+                  My Chat
                 </Link>
                 <div className=' w-full mx-auto flex justify-center'>
                   <Button onClick={handleLogOut} className="w-[80%] mx-auto  text-left px-4 py-2 text-base font-medium ">

@@ -1,4 +1,4 @@
-import { Apple, PlayCircle } from 'lucide-react';
+import { Apple, Mail, MapPin, Phone, PlayCircle, Timer } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { Globe, Instagram, Facebook, Twitter } from 'lucide-react';
@@ -13,12 +13,7 @@ function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Informations</h2>
-              <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Help Center</Link></li>
-                <li><Link href="/terms-conditions" className="text-gray-50 hover:text-gray-300 transition-colors">Terms and Conditions</Link></li>
-                <li><Link href="/privacyPolicy" className="text-gray-50 hover:text-gray-300 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/legalNotice" className="text-gray-50 hover:text-gray-300 transition-colors">Legal Notice</Link></li>
-              </ul>
+              
             </div>
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Wingman</h2>
@@ -27,15 +22,17 @@ function Footer() {
                 <li><Link href="/becomeWingman" className="text-gray-50 hover:text-gray-300 transition-colors">Become a wingman</Link></li>
                 <li><Link href="/gift-card" className="text-gray-50 hover:text-gray-300 transition-colors">Gift Cards</Link></li>
                 <li><Link href="/e-sim" className="text-gray-50 hover:text-gray-300 transition-colors">E SIM</Link></li>
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Investors</Link></li>
                 <li><Link href="/premium-packages" className="text-gray-50 hover:text-gray-300 transition-colors">Premium packages</Link></li>
-                <li><Link href="#" className="text-gray-50 hover:text-gray-300 transition-colors">Partners</Link></li>
               </ul>
             </div>
-            <div className="mb-8">
+            <div className="mb-8  ">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Info Contact</h2>
-              <ul className="space-y-2">
-                <li><Link href="/bookWingman" className="text-gray-50 hover:text-gray-300 transition-colors">bookwingman</Link></li>
+              <ul className="space-y-2 flex flex-col gap-2">
+                <li className='flex gap-3'><MapPin />20, rue Malher - 75004 PARIS</li>
+                <li className='flex gap-3'><Timer />From monday to sunday</li>
+                <li className='flex gap-3'><Mail />contact@wingmanxpress.com</li>
+                <li className='flex gap-3'><Phone />918821098</li>
+
                
               </ul>
             </div>
@@ -74,13 +71,13 @@ function Footer() {
         <div className="space-x-2 md:space-x-4">
           <span>© 2024 Wingman, Inc.</span>
           <span>·</span>
-          <a href="#" className="hover:underline">
-           confidentiality
+          <a href="/privacyPolicy" className="hover:underline">
+           Privacy Policy
 
           </a>
           <span>·</span>
-          <a href="#" className="hover:underline">
-            Genaral Conditions
+          <a href="/terms-conditions" className="hover:underline">
+            Terms and Conditions
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
@@ -88,11 +85,11 @@ function Footer() {
           </a>
           <span>·</span>
           <a href="#" className="hover:underline">
-            How it works
+           Help Center
           </a>
           <span>·</span>
-          <a href="#" className="hover:underline">
-            Company informations
+          <a href="/legalNotice" className="hover:underline">
+            Legal Notice
           </a>
         </div>
 
