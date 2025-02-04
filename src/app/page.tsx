@@ -21,11 +21,6 @@ export default function Home() {
   return (
     <div >
      <Hero/>
-     <HowItWorks/>
-     <HomeNewsLetter/>
-      
-    <HomePageBenefits/>
-
       
       
     </div>
