@@ -18,7 +18,7 @@ function Footer() {
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-4 sm:mb-6">Wingman</h2>
               <ul className="space-y-2">
-                <li><Link href="/aboutus" className="text-gray-50 hover:text-gray-300 transition-colors">About us</Link></li>
+                <li><Link href="/aboutus" className="text-gray-50 hover:text-gray-300 transition-colors">About Uss</Link></li>
                 <li><Link href="/becomeWingman" className="text-gray-50 hover:text-gray-300 transition-colors">Become a wingman</Link></li>
                 <li><Link href="/gift-card" className="text-gray-50 hover:text-gray-300 transition-colors">Gift Cards</Link></li>
                 <li><Link href="/e-sim" className="text-gray-50 hover:text-gray-300 transition-colors">E SIM</Link></li>
