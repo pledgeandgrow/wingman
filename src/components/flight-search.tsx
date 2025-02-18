@@ -1,99 +1,68 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { MapPinIcon, CalendarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const AIRPORTS = [
-  { value: 'JFK', label: 'New York (JFK)' },
-  { value: 'LHR', label: 'London (Heathrow)' },
-  { value: 'CDG', label: 'Paris (Charles de Gaulle)' },
-  { value: 'NRT', label: 'Tokyo (Narita)' },
-]
+const SearchBar = () => {
+  const [departure, setDeparture] = useState("");
+  const [arrival, setArrival] = useState("");
+  const [date, setDate] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-export function FlightSearch({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const router = useRouter()
+  // Simuler une recherche dynamique
+  const handleSearch = (query: string, type: "departure" | "arrival") => {
+    if (query.length > 2) {
+      // Simulation d'une liste de villes (Remplacer par API réelle)
+      const cities = ["Paris", "Lyon", "Marseille", "Bordeaux", "Nice", "Toulouse"];
+      setSuggestions(cities.filter(city => city.toLowerCase().includes(query.toLowerCase())));
+    } else {
+      setSuggestions([]);
+    }
 
-  const handleSearch = (params: Record<string, string>) => {
-    const newSearchParams = new URLSearchParams(searchParams as Record<string, string>)
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) {
-        newSearchParams.set(key, value)
-      } else {
-        newSearchParams.delete(key)
-      }
-    })
-    router.push(`/flights?${newSearchParams.toString()}`)
-  }
+    type === "departure" ? setDeparture(query) : setArrival(query);
+  };
 
   return (
-    <div className="bg-white/80 mt-28 px-4 border-0 border-wing-orange sm:border-2 backdrop-blur-sm rounded-lg p-4 max-w-6xl mx-auto mb-4">
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-grow">
-          <Select 
-            onValueChange={(value) => handleSearch({ departure: value })}
-            defaultValue={searchParams.departure as string}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Departure" />
-            </SelectTrigger>
-            <SelectContent>
-              {AIRPORTS.map((airport) => (
-                <SelectItem key={airport.value} value={airport.value}>
-                  {airport.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Select 
-            onValueChange={(value) => handleSearch({ destination: value })}
-            defaultValue={searchParams.destination as string}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Destination" />
-            </SelectTrigger>
-            <SelectContent>
-              {AIRPORTS.map((airport) => (
-                <SelectItem key={airport.value} value={airport.value}>
-                  {airport.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Input 
-            type="date" 
-            placeholder="Date" 
-            onChange={(e) => handleSearch({ date: e.target.value })}
-            defaultValue={searchParams.date as string}
-          />
-          
-          <Select 
-            onValueChange={(value) => handleSearch({ weight: value })}
-            defaultValue={searchParams.weight as string}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Kilograms" />
-            </SelectTrigger>
-            <SelectContent>
-              {[5, 10, 15, 20].map((kg) => (
-                <SelectItem key={kg} value={kg.toString()}>
-                  {kg} kg
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button 
-          className="w-full lg:w-auto lg:px-8 lg:self-stretch"
-          onClick={() => router.push('/flights')}
-        >
-          Reset
-        </Button>
+    <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mx-auto flex items-center gap-3 border border-gray-200">
+      <div className="relative flex-1 group">
+        <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-500" />
+        <Input
+          type="text"
+          placeholder="Départ"
+          value={departure}
+          onChange={(e) => handleSearch(e.target.value, "departure")}
+          className="pl-12 py-3 text-lg rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full transition-all group-hover:bg-gray-200"
+        />
       </div>
+      
+      <div className="relative flex-1 group">
+        <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-500" />
+        <Input
+          type="text"
+          placeholder="Arrivée"
+          value={arrival}
+          onChange={(e) => handleSearch(e.target.value, "arrival")}
+          className="pl-12 py-3 text-lg rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full transition-all group-hover:bg-gray-200"
+        />
+      </div>
+      
+      <div className="relative flex-1 group">
+        <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-500" />
+        <Input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="pl-12 py-3 text-lg rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full transition-all group-hover:bg-gray-200"
+        />
+      </div>
+      
+      <Button className="bg-blue-600 text-white px-6 py-3 text-lg rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2">
+        <MagnifyingGlassIcon className="w-6 h-6" /> Rechercher
+      </Button>
     </div>
-  )
-}
+  );
+};
 
+export default SearchBar;

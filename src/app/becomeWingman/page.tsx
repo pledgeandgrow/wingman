@@ -23,7 +23,8 @@ import BecomeWingmanHeader from '../components/BecomeWingmanHeader'
 import BecomeWingmanListingSection from '../components/BecomeWingmanListing'
 import BecomeWingmanCohost from '../components/BecomeWingmanCohost'
 import BecomeWingmanFaq from '../components/BecomeWingmanFaq'
-
+import WeightSelector from "../components/WeightSelector";
+import HowItWorks from "../components/HowItWorks";
 function page() {
 
 
@@ -33,7 +34,9 @@ function page() {
   return (
     <>
       <BecomeWingmanHeader />
+      <WeightSelector />
       <BecomeWingmanListingSection/>
+      <HowItWorks/>
       <BecomeWingmanCohost/>
       <BecomeWingmanFaq  />
 
