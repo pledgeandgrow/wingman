@@ -4,6 +4,8 @@ import "./globals.css";
 import Footer from "./components/common/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "./components/common/Navbar";
+import BottomNav from "@/components/bottomNav";
+import SearchBar from "@/components/searchBarHome";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,8 +37,11 @@ export default function RootLayout({
         <Navbar/>
          {children}
         <Toaster />
+        <SearchBar/>
 
         <Footer/>
+        <BottomNav />
+
       </body>
     </html>
   );
